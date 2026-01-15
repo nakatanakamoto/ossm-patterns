@@ -52,41 +52,41 @@ function PatternLoopNode() {
                         </Text>
                     </Box>
 
-                    <Inset side="x" my="4">
+                    <Inset side="x" mt="4">
                         <Separator orientation="horizontal" size="4" />
-                        <Box p="4">
+                        <Box p="3">
                             <Flex gap="3" direction="column">
                                 <Flex justify="between" align="center">
-                                    <Text size="4" weight="bold">Velocity</Text>
+                                    <Text size="3" weight="bold">Velocity</Text>
                                     <Text size="3">{velocity}mm/s</Text>
                                 </Flex>
                                 <Slider onValueChange={(values) => setVelocity(values[0])} defaultValue={[100]} min={0.001} max={600} />
                             </Flex>
                         </Box>
                         <Separator orientation="horizontal" size="4" />
-                        <Box p="4">
+                        <Box p="3">
                             <Flex gap="3" direction="column">
                                 <Flex justify="between" align="center">
-                                    <Text size="4" weight="bold">Position</Text>
+                                    <Text size="3" weight="bold">Position</Text>
                                     <Text size="3">{position}%</Text>
                                 </Flex>
                                 <Slider onValueChange={(values) => setPosition(values[0])} defaultValue={[100]} />
                             </Flex>
                         </Box>
                         <Separator orientation="horizontal" size="4" />
-                        <Box p="4">
+                        <Box p="3">
                             <Flex gap="3" direction="column">
                                 <Flex justify="between" align="center">
-                                    <Text size="4" weight="bold">Torque</Text>
+                                    <Text size="3" weight="bold">Torque</Text>
                                     <Text size="3">{torque}%</Text>
                                 </Flex>
                                 <Slider onValueChange={(values) => setTorque(values[0])} defaultValue={[100]} min={1} max={100} />
                             </Flex>
                         </Box>
                         <Separator orientation="horizontal" size="4" />
-                        <Box p="4">
+                        <Box p="3" pb="0">
                             <Flex justify="between" align="center">
-                                <Text size="4" weight="bold">Easing</Text>
+                                <Text size="3" weight="bold">Easing</Text>
                                 <Select.Root defaultValue="linear">
                                     <Select.Trigger />
                                     <Select.Content>
@@ -97,10 +97,8 @@ function PatternLoopNode() {
                                         </Select.Group>
                                     </Select.Content>
                                 </Select.Root>
-
                             </Flex>
                         </Box>
-                        <Separator orientation="horizontal" size="4" />
                     </Inset>
                 </Box>
             </Card>

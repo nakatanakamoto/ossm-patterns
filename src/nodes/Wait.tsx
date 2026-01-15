@@ -15,22 +15,21 @@ function WaitNode() {
                         </Text>
                     </Box>
 
-                    <Inset side="x" my="4">
+                    <Inset side="x" mt="4">
                         <Separator orientation="horizontal" size="4" />
 
-                        <Box width="100%" p="2">
+                        <Box width="100%" p="3" pb="0">
                             <Flex justify="between" align="center">
                                 <Box flexGrow="1">
                                     <Text size="4" weight="bold">Time</Text>
                                 </Box>
                                 <Box maxWidth="50%" flexGrow="1">
-                                    <TextField.Root type="number" min={0} placeholder="10">
-                                        <TextField.Slot side="right">Seconds</TextField.Slot>
+                                    <TextField.Root type="number" min={0} placeholder="250" step={50}>
+                                        <TextField.Slot side="right">Milliseconds</TextField.Slot>
                                     </TextField.Root>
                                 </Box>
                             </Flex>
                         </Box>
-                        <Separator orientation="horizontal" size="4" />
                     </Inset>
                 </Box>
             </Card>

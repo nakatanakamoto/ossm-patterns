@@ -16,23 +16,22 @@ function EndNode() {
                         </Text>
                     </Box>
 
-                    <Inset side="x" my="4">
+                    <Inset side="x" mt="4">
                         <Separator orientation="horizontal" size="4" />
-                        <Flex gap="2" p="2" align="center">
+                        <Flex gap="2" p="3" align="center">
                             <CheckCircledIcon color="#1FD8A4" />
                             <Text >Starts and ends at position 0</Text>
                         </Flex>
                         <Separator orientation="horizontal" size="4" />
-                        <Flex gap="2" p="2" align="center">
+                        <Flex gap="2" p="3" align="center">
                             <CheckCircledIcon color="#1FD8A4" />
                             <Text>Does not make dangerous accelerations or use excessive torque</Text>
                         </Flex>
                         <Separator orientation="horizontal" size="4" />
-                        <Flex gap="2" p="2" align="center">
+                        <Flex gap="2" p="3" pb="0" align="center">
                             <CheckCircledIcon color="#1FD8A4" />
                             <Text>Does not have dangling nodes</Text>
                         </Flex>
-                        <Separator orientation="horizontal" size="4" />
                     </Inset>
                 </Box>
             </Card>

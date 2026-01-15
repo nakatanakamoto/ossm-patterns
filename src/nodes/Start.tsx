@@ -15,22 +15,21 @@ function StartNode() {
                         </Text>
                     </Box>
 
-                    <Inset side="x" my="4">
+                    <Inset side="x" mt="4">
                         <Separator orientation="horizontal" size="4" />
 
-                        <Box width="100%" p="2">
+                        <Box width="100%" p="3">
                             <Flex justify="between" align="center">
                                 <Text size="4" weight="bold">Name</Text>
                                 <TextField.Root placeholder="Buzzy buzz" />
                             </Flex>
                         </Box>
                         <Separator orientation="horizontal" size="4" />
-                        <Flex width="100%" p="2" gap="2" direction="column">
+                        <Flex width="100%" p="3" pb="0" gap="2" direction="column">
                             <Text size="4" weight="bold">Description</Text>
 
                             <TextArea placeholder="Describe the sensation" />
                         </Flex>
-                        <Separator orientation="horizontal" size="4" />
                     </Inset>
                 </Box>
             </Card>

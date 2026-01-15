@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { ReactFlow, applyNodeChanges, applyEdgeChanges, addEdge, Background, Controls, type Node, type Edge, type OnNodesChange, type OnEdgesChange, type OnConnect } from '@xyflow/react';
+import { ReactFlow, Background, Controls, type Node, type Edge, Panel, useNodesState, useEdgesState, addEdge, type OnConnect } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import "@radix-ui/themes/styles.css";
 import StartNode from './nodes/Start';
-import { Button, Flex, Theme } from '@radix-ui/themes';
+import { Button, Theme, DropdownMenu, Text, Flex } from '@radix-ui/themes';
 import MoveNode from './nodes/Move';
 import EndNode from './nodes/End';
 import WaitNode from './nodes/Wait';
+import useAppearance from './hooks/useAppearance';
 
 const initialNodes: Node[] = [];
 const initialEdges: Edge[] = [];
@@ -19,33 +19,63 @@ const nodeTypes = {
 }
 
 export default function App() {
-  const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState(initialEdges);
+  const [appearance] = useAppearance();
 
-  const onNodesChange: OnNodesChange = (changes) => setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot));
-  const onEdgesChange: OnEdgesChange = (changes) => setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot));
-  const onConnect: OnConnect = (params) => setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot));
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const onConnect: OnConnect = (params) => setEdges((eds) => addEdge(params, eds));
+
+  const addNode = (type: keyof typeof nodeTypes) => {
+    setNodes((nodes) => [
+      ...nodes,
+      {
+        id: String(Math.random()),
+        type,
+        position: {
+          x: 0,
+          y: 0,
+        },
+        data: {},
+      }
+    ]);
+  }
 
   return (
-    <Theme>
+    <Theme accentColor="crimson">
       <div style={{ width: '100vw', height: '100vh' }}>
-        <Flex gap="1">
-          <Button onClick={() => setNodes([
-            ...nodes, { id: String(Math.random()), type: 'start', position: { x: 1, y: 3 }, data: {} }])}>Add Start</Button>
-          <Button onClick={() => setNodes([
-            ...nodes, { id: String(Math.random()), type: 'end', position: { x: 1, y: 3 }, data: {} }])}>Add End</Button>
-          <Button onClick={() => setNodes([
-            ...nodes, { id: String(Math.random()), type: 'move', position: { x: 1, y: 3 }, data: {} }])}>Add Move</Button>
-          <Button onClick={() => setNodes([
-          ...nodes, { id: String(Math.random()), type: 'wait', position: { x: 1, y: 3 }, data: {} }])}>Add Delay</Button>
-        </Flex>
+        <Panel position="top-left">
+          <Flex gap="3" align="center">
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger>
+              <Button>
+                Add Nodes
+                <DropdownMenu.TriggerIcon />
+              </Button>
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Content style={{ minWidth: '150px' }}>
+              <DropdownMenu.Item onSelect={() => addNode('start')}>Start</DropdownMenu.Item>
+              <DropdownMenu.Item onSelect={() => addNode('end')}>End</DropdownMenu.Item>
+              <DropdownMenu.Separator />
+              <DropdownMenu.Item onSelect={() => addNode('move')}>Move</DropdownMenu.Item>
+              <DropdownMenu.Item onSelect={() => addNode('wait')}>Pause</DropdownMenu.Item>
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
+          <Button>Export Pattern</Button>
+          </Flex>
+        </Panel>
+
+        <Panel position="top-center">
+          <Text size="4" weight="bold">OSSM Patterns</Text>
+        </Panel>
 
         <ReactFlow
+          colorMode={appearance}
           nodes={nodes}
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
+          
           nodeTypes={nodeTypes}
           fitView
         >
