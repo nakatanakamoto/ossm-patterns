@@ -1,7 +1,19 @@
 import { Box, Card, Flex, Heading, Inset, Separator, Text, TextField } from "@radix-ui/themes";
-import { Handle, Position } from "@xyflow/react";
+import { Handle, Position, useReactFlow, type Node, type NodeProps } from "@xyflow/react";
 
-function WaitNode() {
+type WaitNodeProps = NodeProps<Node<{
+    duration: number;
+}>>;
+
+function WaitNode({ id, data }: WaitNodeProps) {
+    const { updateNodeData } = useReactFlow();
+
+    const setDuration = (duration: number) => {
+        updateNodeData(id, {
+            duration,
+        });
+    }
+
     return (
         <div>
             <Card>
@@ -24,7 +36,11 @@ function WaitNode() {
                                     <Text size="4" weight="bold">Time</Text>
                                 </Box>
                                 <Box maxWidth="50%" flexGrow="1">
-                                    <TextField.Root type="number" min={0} placeholder="250" step={50}>
+                                    <TextField.Root onChange={(e) => {
+                                        const rawValue = e.target.value;
+                                        const parsedValue = parseFloat(rawValue);
+                                        setDuration(parsedValue);
+                                    }} type="number" min={0} placeholder="250" step={50} value={data.duration}>
                                         <TextField.Slot side="right">Milliseconds</TextField.Slot>
                                     </TextField.Root>
                                 </Box>

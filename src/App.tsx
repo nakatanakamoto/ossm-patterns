@@ -1,4 +1,4 @@
-import { ReactFlow, Background, Controls, type Node, type Edge, Panel, useNodesState, useEdgesState, addEdge, type OnConnect } from '@xyflow/react';
+import { ReactFlow, Background, Controls, type Node, type Edge, Panel, useNodesState, useEdgesState, addEdge, type OnConnect, useReactFlow } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import "@radix-ui/themes/styles.css";
 import StartNode from './nodes/Start';
@@ -21,20 +21,27 @@ const nodeTypes = {
 export default function App() {
   const [appearance] = useAppearance();
 
+  const { getNodesBounds, getNodes } = useReactFlow();
+
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const onConnect: OnConnect = (params) => setEdges((eds) => addEdge(params, eds));
 
   const addNode = (type: keyof typeof nodeTypes) => {
+    const bounds = getNodesBounds(getNodes());
+
+    const position = {
+      x: bounds.x + bounds.width + 50,
+      y: bounds.y + bounds.height / 2,
+    };
+
     setNodes((nodes) => [
       ...nodes,
       {
         id: String(Math.random()),
         type,
-        position: {
-          x: 0,
-          y: 0,
-        },
+        position,
+        origin: [0, 0.5],
         data: {},
       }
     ]);

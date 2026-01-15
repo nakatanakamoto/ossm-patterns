@@ -1,7 +1,26 @@
 import { Box, Card, Flex, Heading, Inset, Separator, Text, TextArea, TextField } from "@radix-ui/themes";
-import { Handle, Position } from "@xyflow/react";
+import { Handle, Position, useReactFlow, type Node, type NodeProps } from "@xyflow/react";
 
-function StartNode() {
+type StartNodeProps = NodeProps<Node<{
+    name: string;
+    description: string;
+}>>;
+
+function StartNode({ id, data }: StartNodeProps) {
+    const { updateNodeData } = useReactFlow();
+
+    const updateName = (newName: string) => {
+        updateNodeData(id, {
+            name: newName,
+        })
+    }
+
+    const updateDescription = (newDescription: string) => {
+        updateNodeData(id, {
+            description: newDescription,
+        })
+    }
+
     return (
         <div>
             <Card>
@@ -21,14 +40,25 @@ function StartNode() {
                         <Box width="100%" p="3">
                             <Flex justify="between" align="center">
                                 <Text size="4" weight="bold">Name</Text>
-                                <TextField.Root placeholder="Buzzy buzz" />
+                                <TextField.Root onChange={
+                                    (e) => {
+                                        const value = e.target.value;
+                                        updateName(value)
+                                    }}
+                                    placeholder="Simple stroke"
+                                    value={data.name}
+                                />
                             </Flex>
                         </Box>
                         <Separator orientation="horizontal" size="4" />
                         <Flex width="100%" p="3" pb="0" gap="2" direction="column">
                             <Text size="4" weight="bold">Description</Text>
-
-                            <TextArea placeholder="Describe the sensation" />
+                            <TextArea onChange={
+                                (e) => {
+                                        const value = e.target.value;
+                                        updateDescription(value)
+                                    }
+                            } placeholder="Describe the sensation" />
                         </Flex>
                     </Inset>
                 </Box>
