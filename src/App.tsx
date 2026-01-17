@@ -1,12 +1,24 @@
-import { ReactFlow, Background, Controls, type Node, type Edge, Panel, useNodesState, useEdgesState, addEdge, type OnConnect, useReactFlow } from '@xyflow/react';
-import '@xyflow/react/dist/style.css';
+import {
+  ReactFlow,
+  Background,
+  Controls,
+  type Node,
+  type Edge,
+  Panel,
+  useNodesState,
+  useEdgesState,
+  addEdge,
+  type OnConnect,
+  useReactFlow,
+} from "@xyflow/react";
+import "@xyflow/react/dist/style.css";
 import "@radix-ui/themes/styles.css";
-import StartNode from './nodes/Start';
-import { Button, Theme, DropdownMenu, Text, Flex } from '@radix-ui/themes';
-import MoveNode from './nodes/Move';
-import EndNode from './nodes/End';
-import WaitNode from './nodes/Wait';
-import useAppearance from './hooks/useAppearance';
+import StartNode from "./nodes/Start";
+import { Button, Theme, DropdownMenu, Text, Flex } from "@radix-ui/themes";
+import MoveNode from "./nodes/Move";
+import EndNode from "./nodes/End";
+import WaitNode from "./nodes/Wait";
+import useAppearance from "./hooks/useAppearance";
 
 const initialNodes: Node[] = [];
 const initialEdges: Edge[] = [];
@@ -16,7 +28,7 @@ const nodeTypes = {
   end: EndNode,
   move: MoveNode,
   wait: WaitNode,
-}
+};
 
 export default function App() {
   const [appearance] = useAppearance();
@@ -25,7 +37,8 @@ export default function App() {
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const onConnect: OnConnect = (params) => setEdges((eds) => addEdge(params, eds));
+  const onConnect: OnConnect = (params) =>
+    setEdges((eds) => addEdge(params, eds));
 
   const addNode = (type: keyof typeof nodeTypes) => {
     const bounds = getNodesBounds(getNodes());
@@ -43,36 +56,46 @@ export default function App() {
         position,
         origin: [0, 0.5],
         data: {},
-      }
+      },
     ]);
-  }
+  };
 
   return (
     <Theme accentColor="crimson">
-      <div style={{ width: '100vw', height: '100vh' }}>
+      <div style={{ width: "100vw", height: "100vh" }}>
         <Panel position="top-left">
           <Flex gap="3" align="center">
-          <DropdownMenu.Root>
-            <DropdownMenu.Trigger>
-              <Button>
-                Add Nodes
-                <DropdownMenu.TriggerIcon />
-              </Button>
-            </DropdownMenu.Trigger>
-            <DropdownMenu.Content style={{ minWidth: '150px' }}>
-              <DropdownMenu.Item onSelect={() => addNode('start')}>Start</DropdownMenu.Item>
-              <DropdownMenu.Item onSelect={() => addNode('end')}>End</DropdownMenu.Item>
-              <DropdownMenu.Separator />
-              <DropdownMenu.Item onSelect={() => addNode('move')}>Move</DropdownMenu.Item>
-              <DropdownMenu.Item onSelect={() => addNode('wait')}>Pause</DropdownMenu.Item>
-            </DropdownMenu.Content>
-          </DropdownMenu.Root>
-          <Button>Export Pattern</Button>
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger>
+                <Button>
+                  Add Nodes
+                  <DropdownMenu.TriggerIcon />
+                </Button>
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Content style={{ minWidth: "150px" }}>
+                <DropdownMenu.Item onSelect={() => addNode("start")}>
+                  Start
+                </DropdownMenu.Item>
+                <DropdownMenu.Item onSelect={() => addNode("end")}>
+                  End
+                </DropdownMenu.Item>
+                <DropdownMenu.Separator />
+                <DropdownMenu.Item onSelect={() => addNode("move")}>
+                  Move
+                </DropdownMenu.Item>
+                <DropdownMenu.Item onSelect={() => addNode("wait")}>
+                  Pause
+                </DropdownMenu.Item>
+              </DropdownMenu.Content>
+            </DropdownMenu.Root>
+            <Button>Export Pattern</Button>
           </Flex>
         </Panel>
 
         <Panel position="top-center">
-          <Text size="4" weight="bold">OSSM Patterns</Text>
+          <Text size="4" weight="bold">
+            OSSM Patterns
+          </Text>
         </Panel>
 
         <ReactFlow
@@ -82,7 +105,6 @@ export default function App() {
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
-          
           nodeTypes={nodeTypes}
           fitView
         >

@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
 
-type Appearance = 'dark' | 'light';
+type Appearance = "dark" | "light";
 
 function useAppearance() {
-    const initialAppearance = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    
-    const [appearance, setAppearance] = useState<Appearance>(initialAppearance);
+  const initialAppearance =
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
 
-    useEffect(() => {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-            setAppearance(event.matches ? "dark" : "light");
-        });
-    }, []);
+  const [appearance, setAppearance] = useState<Appearance>(initialAppearance);
 
-    return [appearance, setAppearance] as const;
+  useEffect(() => {
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (event) => {
+        setAppearance(event.matches ? "dark" : "light");
+      });
+  }, []);
+
+  return [appearance, setAppearance] as const;
 }
 
-export default useAppearance
+export default useAppearance;
