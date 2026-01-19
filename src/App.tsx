@@ -12,7 +12,7 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import "@radix-ui/themes/styles.css";
-import { Theme, Text } from "@radix-ui/themes";
+import { Theme, Text, Badge, Flex } from "@radix-ui/themes";
 import useAppearance from "./hooks/useAppearance";
 import Menu from "./components/Menu";
 import { nodeTypes } from "./nodes";
@@ -37,9 +37,12 @@ export default function App() {
         </Panel>
 
         <Panel position="top-center">
-          <Text size="4" weight="bold">
-            OSSM Patterns
-          </Text>
+          <Flex gap="3" align="baseline">
+            <Text size="4" weight="bold">
+              OSSM Patterns
+            </Text>
+            <Badge color="ruby">ALPHA</Badge>
+          </Flex>
         </Panel>
 
         <ReactFlow
