@@ -16,6 +16,7 @@ import {
   type Node,
   type NodeProps,
 } from "@xyflow/react";
+import { useEffect } from "react";
 
 type MoveNodeProps = NodeProps<
   Node<{
@@ -87,6 +88,15 @@ function PatternLoopNode({ id, data }: MoveNodeProps) {
     });
   };
 
+  useEffect(() => {
+    updateNodeData(id, {
+      velocity: 100,
+      position: 0.5,
+      torque: 0.5,
+      easing: "linear",
+    });
+  }, []);
+
   return (
     <div>
       <Card>
@@ -112,9 +122,9 @@ function PatternLoopNode({ id, data }: MoveNodeProps) {
                 </Flex>
                 <Slider
                   onValueChange={(values) => setVelocity(values[0])}
-                  defaultValue={[100]}
                   min={0.001}
                   max={600}
+                  value={[data.velocity]}
                 />
               </Flex>
             </Box>
@@ -125,11 +135,14 @@ function PatternLoopNode({ id, data }: MoveNodeProps) {
                   <Text size="3" weight="bold">
                     Position
                   </Text>
-                  <Text size="3">{data.position}%</Text>
+                  <Text size="3">{Math.round(data.position * 100)}%</Text>
                 </Flex>
                 <Slider
                   onValueChange={(values) => setPosition(values[0])}
-                  defaultValue={[100]}
+                  value={[data.position]}
+                  min={0}
+                  max={1}
+                  step={0.01}
                 />
               </Flex>
             </Box>
@@ -140,13 +153,14 @@ function PatternLoopNode({ id, data }: MoveNodeProps) {
                   <Text size="3" weight="bold">
                     Torque
                   </Text>
-                  <Text size="3">{data.torque}%</Text>
+                  <Text size="3">{Math.round(data.torque * 100)}%</Text>
                 </Flex>
                 <Slider
                   onValueChange={(values) => setTorque(values[0])}
-                  defaultValue={[100]}
-                  min={1}
-                  max={100}
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  value={[data.torque]}
                 />
               </Flex>
             </Box>

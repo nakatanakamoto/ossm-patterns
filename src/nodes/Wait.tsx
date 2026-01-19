@@ -15,6 +15,7 @@ import {
   type Node,
   type NodeProps,
 } from "@xyflow/react";
+import { useEffect } from "react";
 
 type WaitNodeProps = NodeProps<
   Node<{
@@ -30,6 +31,12 @@ function WaitNode({ id, data }: WaitNodeProps) {
       duration,
     });
   };
+
+  useEffect(() => {
+    updateNodeData(id, {
+      duration: 300,
+    });
+  }, []);
 
   return (
     <div>
