@@ -9,8 +9,8 @@ import {
   Text,
   Select,
 } from "@radix-ui/themes";
-import { Handle, Position, useReactFlow } from "@xyflow/react";
-import type { PatternNodeType } from "./type";
+import { Handle, Position, useReactFlow, type Node } from "@xyflow/react";
+import type { PatternNodeType } from ".";
 
 const eases = [
   "linear",
@@ -46,14 +46,17 @@ const eases = [
   "in out bounce",
 ] as const;
 
-type MoveNodeType = PatternNodeType<{
-  velocity: number;
-  position: number;
-  torque: number;
-  easing: (typeof eases)[number];
-}>;
+export type MoveNodeType = Node<
+  {
+    velocity: number;
+    position: number;
+    torque: number;
+    easing: (typeof eases)[number];
+  },
+  "move"
+>;
 
-const PatternLoopNode: MoveNodeType = ({ id, data }) => {
+const PatternLoopNode: PatternNodeType<MoveNodeType> = ({ id, data }) => {
   const { updateNodeData } = useReactFlow();
 
   const setVelocity = (velocity: number) => {

@@ -8,14 +8,17 @@ import {
   Text,
   TextField,
 } from "@radix-ui/themes";
-import { Handle, Position, useReactFlow } from "@xyflow/react";
-import type { PatternNodeType } from "./type";
+import { Handle, Position, useReactFlow, type Node } from "@xyflow/react";
+import type { PatternNodeType } from ".";
 
-type WaitNodeType = PatternNodeType<{
-  duration: number;
-}>;
+export type WaitNodeType = Node<
+  {
+    duration: number;
+  },
+  "wait"
+>;
 
-const WaitNode: WaitNodeType = ({ id, data }) => {
+const WaitNode: PatternNodeType<WaitNodeType> = ({ id, data }) => {
   const { updateNodeData } = useReactFlow();
 
   const setDuration = (duration: number) => {

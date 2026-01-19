@@ -9,13 +9,18 @@ import {
   TextArea,
   TextField,
 } from "@radix-ui/themes";
-import { Handle, Position, useReactFlow } from "@xyflow/react";
-import type { PatternNodeType } from "./type";
+import { Handle, Position, useReactFlow, type Node } from "@xyflow/react";
+import type { PatternNodeType } from ".";
 
-type StartNodeProps = PatternNodeType<{
-  name: string;
-  description: string;
-}>;
+export type StartNodeType = Node<
+  {
+    name: string;
+    description: string;
+  },
+  "start"
+>;
+
+type StartNodeProps = PatternNodeType<StartNodeType>;
 
 const StartNode: StartNodeProps = ({ id, data }) => {
   const { updateNodeData } = useReactFlow();

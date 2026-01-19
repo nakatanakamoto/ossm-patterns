@@ -8,12 +8,12 @@ import {
   Separator,
   Text,
 } from "@radix-ui/themes";
-import { Handle, Position } from "@xyflow/react";
-import type { PatternNodeType } from "./type";
+import { Handle, Position, type Node } from "@xyflow/react";
+import type { PatternNodeType } from ".";
 
-type EndNode = PatternNodeType;
+export type EndNodeType = Node<Record<string, never>, "end">;
 
-const EndNode: PatternNodeType = () => {
+const EndNode: PatternNodeType<EndNodeType> = () => {
   return (
     <div>
       <Card>
