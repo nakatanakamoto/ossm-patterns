@@ -8,22 +8,14 @@ import {
   Text,
   TextField,
 } from "@radix-ui/themes";
-import {
-  Handle,
-  Position,
-  useReactFlow,
-  type Node,
-  type NodeProps,
-} from "@xyflow/react";
-import { useEffect } from "react";
+import { Handle, Position, useReactFlow } from "@xyflow/react";
+import type { PatternNodeType } from "./type";
 
-type WaitNodeProps = NodeProps<
-  Node<{
-    duration: number;
-  }>
->;
+type WaitNodeType = PatternNodeType<{
+  duration: number;
+}>;
 
-function WaitNode({ id, data }: WaitNodeProps) {
+const WaitNode: WaitNodeType = ({ id, data }) => {
   const { updateNodeData } = useReactFlow();
 
   const setDuration = (duration: number) => {
@@ -31,12 +23,6 @@ function WaitNode({ id, data }: WaitNodeProps) {
       duration,
     });
   };
-
-  useEffect(() => {
-    updateNodeData(id, {
-      duration: 300,
-    });
-  }, []);
 
   return (
     <div>
@@ -86,6 +72,10 @@ function WaitNode({ id, data }: WaitNodeProps) {
       <Handle type="target" position={Position.Right} />
     </div>
   );
-}
+};
+
+WaitNode.defaultNodeData = () => ({
+  duration: 300,
+});
 
 export default WaitNode;

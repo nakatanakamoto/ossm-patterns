@@ -9,22 +9,15 @@ import {
   TextArea,
   TextField,
 } from "@radix-ui/themes";
-import {
-  Handle,
-  Position,
-  useReactFlow,
-  type Node,
-  type NodeProps,
-} from "@xyflow/react";
+import { Handle, Position, useReactFlow } from "@xyflow/react";
+import type { PatternNodeType } from "./type";
 
-type StartNodeProps = NodeProps<
-  Node<{
-    name: string;
-    description: string;
-  }>
->;
+type StartNodeProps = PatternNodeType<{
+  name: string;
+  description: string;
+}>;
 
-function StartNode({ id, data }: StartNodeProps) {
+const StartNode: StartNodeProps = ({ id, data }) => {
   const { updateNodeData } = useReactFlow();
 
   const updateName = (newName: string) => {
@@ -81,6 +74,7 @@ function StartNode({ id, data }: StartNodeProps) {
                   updateDescription(value);
                 }}
                 placeholder="Describe the sensation"
+                value={data.description}
               />
             </Flex>
           </Inset>
@@ -89,6 +83,11 @@ function StartNode({ id, data }: StartNodeProps) {
       <Handle type="target" position={Position.Right} />
     </div>
   );
-}
+};
+
+StartNode.defaultNodeData = () => ({
+  name: "",
+  description: "",
+});
 
 export default StartNode;

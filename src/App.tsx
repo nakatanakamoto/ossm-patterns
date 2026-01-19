@@ -19,6 +19,7 @@ import MoveNode from "./nodes/Move";
 import EndNode from "./nodes/End";
 import WaitNode from "./nodes/Wait";
 import useAppearance from "./hooks/useAppearance";
+import type { PatternNodeType } from "./nodes/type";
 
 const initialNodes: Node[] = [];
 const initialEdges: Edge[] = [];
@@ -28,6 +29,9 @@ const nodeTypes = {
   end: EndNode,
   move: MoveNode,
   wait: WaitNode,
+} satisfies {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [nodeType: string]: PatternNodeType<any>;
 };
 
 export default function App() {
@@ -55,7 +59,7 @@ export default function App() {
         type,
         position,
         origin: [0, 0.5],
-        data: {},
+        data: nodeTypes[type].defaultNodeData(),
       },
     ]);
   };

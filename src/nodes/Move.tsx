@@ -9,23 +9,8 @@ import {
   Text,
   Select,
 } from "@radix-ui/themes";
-import {
-  Handle,
-  Position,
-  useReactFlow,
-  type Node,
-  type NodeProps,
-} from "@xyflow/react";
-import { useEffect } from "react";
-
-type MoveNodeProps = NodeProps<
-  Node<{
-    velocity: number;
-    position: number;
-    torque: number;
-    easing: (typeof eases)[number];
-  }>
->;
+import { Handle, Position, useReactFlow } from "@xyflow/react";
+import type { PatternNodeType } from "./type";
 
 const eases = [
   "linear",
@@ -61,7 +46,14 @@ const eases = [
   "in out bounce",
 ] as const;
 
-function PatternLoopNode({ id, data }: MoveNodeProps) {
+type MoveNodeType = PatternNodeType<{
+  velocity: number;
+  position: number;
+  torque: number;
+  easing: (typeof eases)[number];
+}>;
+
+const PatternLoopNode: MoveNodeType = ({ id, data }) => {
   const { updateNodeData } = useReactFlow();
 
   const setVelocity = (velocity: number) => {
@@ -87,15 +79,6 @@ function PatternLoopNode({ id, data }: MoveNodeProps) {
       easing,
     });
   };
-
-  useEffect(() => {
-    updateNodeData(id, {
-      velocity: 100,
-      position: 0.5,
-      torque: 0.5,
-      easing: "linear",
-    });
-  }, []);
 
   return (
     <div>
@@ -191,6 +174,13 @@ function PatternLoopNode({ id, data }: MoveNodeProps) {
       <Handle type="target" position={Position.Right} />
     </div>
   );
-}
+};
+
+PatternLoopNode.defaultNodeData = () => ({
+  velocity: 100,
+  position: 0.5,
+  torque: 0.5,
+  easing: "linear",
+});
 
 export default PatternLoopNode;

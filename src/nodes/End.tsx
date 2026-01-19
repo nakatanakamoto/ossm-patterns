@@ -9,8 +9,11 @@ import {
   Text,
 } from "@radix-ui/themes";
 import { Handle, Position } from "@xyflow/react";
+import type { PatternNodeType } from "./type";
 
-function EndNode() {
+type EndNode = PatternNodeType;
+
+const EndNode: PatternNodeType = () => {
   return (
     <div>
       <Card>
@@ -48,6 +51,8 @@ function EndNode() {
       <Handle type="source" position={Position.Left} />
     </div>
   );
-}
+};
+
+EndNode.defaultNodeData = () => ({});
 
 export default EndNode;
