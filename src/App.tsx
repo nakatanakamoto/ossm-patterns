@@ -17,8 +17,10 @@ import useAppearance from "./hooks/useAppearance";
 import Menu from "./components/Menu";
 import { nodeTypes } from "./nodes";
 
-const initialNodes: Node[] = [];
-const initialEdges: Edge[] = [];
+import SimpleStroke from "./patterns/simple-stroke.json";
+
+const initialNodes: Node[] = SimpleStroke.nodes as Node[];
+const initialEdges: Edge[] = SimpleStroke.edges;
 
 export default function App() {
   const [appearance] = useAppearance();

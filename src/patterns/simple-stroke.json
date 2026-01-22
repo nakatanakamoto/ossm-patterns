@@ -1,0 +1,134 @@
+{
+  "nodes": [
+    {
+      "id": "0.5657273713650691",
+      "type": "start",
+      "position": {
+        "x": 50,
+        "y": 0
+      },
+      "origin": [
+        0,
+        0.5
+      ],
+      "data": {
+        "name": "Simple Stroke",
+        "description": "Simple in and out. Sensation does nothing."
+      },
+      "measured": {
+        "width": 344,
+        "height": 254
+      },
+      "selected": false
+    },
+    {
+      "id": "0.21998385861925063",
+      "type": "move",
+      "position": {
+        "x": 444,
+        "y": 0
+      },
+      "origin": [
+        0,
+        0.5
+      ],
+      "data": {
+        "velocity": 100,
+        "position": 1,
+        "torque": 0.5,
+        "easing": "linear"
+      },
+      "measured": {
+        "width": 344,
+        "height": 338
+      },
+      "selected": false
+    },
+    {
+      "id": "0.9950916139294336",
+      "type": "wait",
+      "position": {
+        "x": 838,
+        "y": 0
+      },
+      "origin": [
+        0,
+        0.5
+      ],
+      "data": {
+        "duration": 300
+      },
+      "measured": {
+        "width": 356,
+        "height": 131
+      }
+    },
+    {
+      "id": "0.40963617864601043",
+      "type": "move",
+      "position": {
+        "x": 1244,
+        "y": 0
+      },
+      "origin": [
+        0,
+        0.5
+      ],
+      "data": {
+        "velocity": 100,
+        "position": 0,
+        "torque": 0.5,
+        "easing": "linear"
+      },
+      "measured": {
+        "width": 344,
+        "height": 338
+      },
+      "selected": true
+    },
+    {
+      "id": "0.12896420070097692",
+      "type": "end",
+      "position": {
+        "x": 1638,
+        "y": 0
+      },
+      "origin": [
+        0,
+        0.5
+      ],
+      "data": {},
+      "measured": {
+        "width": 517,
+        "height": 221
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "0.21998385861925063",
+      "target": "0.5657273713650691",
+      "id": "xy-edge__0.21998385861925063-0.5657273713650691"
+    },
+    {
+      "source": "0.9950916139294336",
+      "target": "0.21998385861925063",
+      "id": "xy-edge__0.9950916139294336-0.21998385861925063"
+    },
+    {
+      "source": "0.40963617864601043",
+      "target": "0.9950916139294336",
+      "id": "xy-edge__0.40963617864601043-0.9950916139294336"
+    },
+    {
+      "source": "0.12896420070097692",
+      "target": "0.40963617864601043",
+      "id": "xy-edge__0.12896420070097692-0.40963617864601043"
+    }
+  ],
+  "viewport": {
+    "x": 59.463162453234304,
+    "y": 383.81384251901915,
+    "zoom": 0.6258982293269968
+  }
+}

@@ -1,4 +1,4 @@
-import { CheckCircledIcon } from "@radix-ui/react-icons";
+import { CheckCircledIcon, CrossCircledIcon } from "@radix-ui/react-icons";
 import {
   Box,
   Card,
@@ -8,16 +8,34 @@ import {
   Separator,
   Text,
 } from "@radix-ui/themes";
-import { Handle, Position, type Node } from "@xyflow/react";
-import type { PatternNodeType } from ".";
+import { Handle, Position, useEdges, useNodes, type Node } from "@xyflow/react";
+import type { NodeType, PatternNodeType } from ".";
+import useCurrentFlow from "../hooks/useCurrentFlow";
+import { green, red } from "@radix-ui/colors";
+
+function validateStartAndEnd(nodes: NodeType[]) {
+  const hasSingleStart =
+    nodes.filter((node) => node.type === "start").length === 1;
+  const hasSingleEnd = nodes.filter((node) => node.type === "end").length === 1;
+
+  if (hasSingleStart === false || hasSingleEnd === false) {
+    return "The pattern must have a single start and a single end node";
+  }
+}
 
 export type EndNodeType = Node<Record<string, never>, "end">;
 
-const EndNode: PatternNodeType<EndNodeType> = () => {
+const EndNode: PatternNodeType<EndNodeType> = ({ id }) => {
+  const nodes = useNodes<NodeType>();
+  const edges = useEdges();
+  const currentFlow = useCurrentFlow(id, nodes, edges);
+
+  const startAndEndError = validateStartAndEnd(currentFlow.nodes);
+
   return (
     <div>
       <Card>
-        <Box minWidth="100px" flexGrow="1">
+        <Box width="300px" flexGrow="1">
           <Box>
             <Heading size="5" weight="bold">
               Pattern End
@@ -30,20 +48,16 @@ const EndNode: PatternNodeType<EndNodeType> = () => {
           <Inset side="x" mt="4">
             <Separator orientation="horizontal" size="4" />
             <Flex gap="2" p="3" align="center">
-              <CheckCircledIcon color="#1FD8A4" />
-              <Text>Starts and ends at position 0</Text>
-            </Flex>
-            <Separator orientation="horizontal" size="4" />
-            <Flex gap="2" p="3" align="center">
-              <CheckCircledIcon color="#1FD8A4" />
+              {startAndEndError === undefined ? (
+                <CheckCircledIcon color={green.green11} />
+              ) : (
+                <CrossCircledIcon color={red.red9} />
+              )}
               <Text>
-                Does not make dangerous accelerations or use excessive torque
+                {startAndEndError === undefined
+                  ? "The pattern has a single start and end"
+                  : startAndEndError}
               </Text>
-            </Flex>
-            <Separator orientation="horizontal" size="4" />
-            <Flex gap="2" p="3" pb="0" align="center">
-              <CheckCircledIcon color="#1FD8A4" />
-              <Text>Does not have dangling nodes</Text>
             </Flex>
           </Inset>
         </Box>
