@@ -1,17 +1,14 @@
+import { Box, Flex, Heading, Text, TextField } from "@radix-ui/themes";
 import {
-  Box,
-  Card,
-  Flex,
-  Heading,
-  Inset,
-  Separator,
-  Text,
-  TextField,
-} from "@radix-ui/themes";
-import { Handle, Position, useReactFlow, type Node } from "@xyflow/react";
+  Handle,
+  Position,
+  useReactFlow,
+  type Node as NodeType,
+} from "@xyflow/react";
 import type { PatternNodeType } from ".";
+import Node from "../components/Node";
 
-export type DelayNodeType = Node<
+export type DelayNodeType = NodeType<
   {
     duration: number;
   },
@@ -28,52 +25,50 @@ const DelayNode: PatternNodeType<DelayNodeType> = ({ id, data }) => {
   };
 
   return (
-    <div>
-      <Card>
-        <Box minWidth="320px" flexGrow="1">
-          <Box>
-            <Heading size="5" weight="bold">
-              Delay
-            </Heading>
-            <Text as="div" size="2">
-              Pause for effect
+    <Node>
+      <Node.Section
+        handles={
+          <>
+            <Handle type="source" position={Position.Left} />
+            <Handle type="target" position={Position.Right} />
+          </>
+        }
+      >
+        <Heading size="5" weight="bold">
+          Delay
+        </Heading>
+        <Text as="div" size="2">
+          Pause for effect
+        </Text>
+      </Node.Section>
+      <Node.Separator />
+
+      <Node.Section>
+        <Flex justify="between" align="center">
+          <Box flexGrow="1">
+            <Text size="4" weight="bold">
+              Time
             </Text>
           </Box>
-
-          <Inset side="x" mt="4">
-            <Separator orientation="horizontal" size="4" />
-
-            <Box width="100%" p="3" pb="0">
-              <Flex justify="between" align="center">
-                <Box flexGrow="1">
-                  <Text size="4" weight="bold">
-                    Time
-                  </Text>
-                </Box>
-                <Box maxWidth="50%" flexGrow="1">
-                  <TextField.Root
-                    onChange={(e) => {
-                      const rawValue = e.target.value;
-                      const parsedValue = parseFloat(rawValue);
-                      setDuration(parsedValue);
-                    }}
-                    type="number"
-                    min={0}
-                    placeholder="250"
-                    step={50}
-                    value={data.duration}
-                  >
-                    <TextField.Slot side="right">Milliseconds</TextField.Slot>
-                  </TextField.Root>
-                </Box>
-              </Flex>
-            </Box>
-          </Inset>
-        </Box>
-      </Card>
-      <Handle type="source" position={Position.Left} />
-      <Handle type="target" position={Position.Right} />
-    </div>
+          <Box maxWidth="50%" flexGrow="1">
+            <TextField.Root
+              onChange={(e) => {
+                const rawValue = e.target.value;
+                const parsedValue = parseFloat(rawValue);
+                setDuration(parsedValue);
+              }}
+              type="number"
+              min={0}
+              placeholder="250"
+              step={50}
+              value={data.duration}
+            >
+              <TextField.Slot side="right">Milliseconds</TextField.Slot>
+            </TextField.Root>
+          </Box>
+        </Flex>
+      </Node.Section>
+    </Node>
   );
 };
 

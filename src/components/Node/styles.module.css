@@ -1,0 +1,7 @@
+.card {
+    padding: 0;
+    contain: none;
+    overflow: visible;
+
+    min-width: 340px;
+}

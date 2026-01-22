@@ -1,17 +1,16 @@
 import { CheckCircledIcon, CrossCircledIcon } from "@radix-ui/react-icons";
+import { Flex, Heading, Text } from "@radix-ui/themes";
 import {
-  Box,
-  Card,
-  Flex,
-  Heading,
-  Inset,
-  Separator,
-  Text,
-} from "@radix-ui/themes";
-import { Handle, Position, useEdges, useNodes, type Node } from "@xyflow/react";
-import type { NodeType, PatternNodeType } from ".";
+  Handle,
+  Position,
+  useEdges,
+  useNodes,
+  type Node as NodeType,
+} from "@xyflow/react";
+import type { NodeType as NodeTypes, PatternNodeType } from ".";
 import useCurrentFlow from "../hooks/useCurrentFlow";
 import { green, red } from "@radix-ui/colors";
+import Node from "../components/Node";
 
 function validateStartAndEnd(nodes: NodeType[]) {
   const hasSingleStart =
@@ -23,47 +22,41 @@ function validateStartAndEnd(nodes: NodeType[]) {
   }
 }
 
-export type EndNodeType = Node<Record<string, never>, "end">;
+export type EndNodeType = NodeType<Record<string, never>, "end">;
 
 const EndNode: PatternNodeType<EndNodeType> = ({ id }) => {
-  const nodes = useNodes<NodeType>();
+  const nodes = useNodes<NodeTypes>();
   const edges = useEdges();
   const currentFlow = useCurrentFlow(id, nodes, edges);
 
   const startAndEndError = validateStartAndEnd(currentFlow.nodes);
 
   return (
-    <div>
-      <Card>
-        <Box width="300px" flexGrow="1">
-          <Box>
-            <Heading size="5" weight="bold">
-              Pattern End
-            </Heading>
-            <Text as="div" size="2">
-              End here
-            </Text>
-          </Box>
-
-          <Inset side="x" mt="4">
-            <Separator orientation="horizontal" size="4" />
-            <Flex gap="2" p="3" align="center">
-              {startAndEndError === undefined ? (
-                <CheckCircledIcon color={green.green11} />
-              ) : (
-                <CrossCircledIcon color={red.red9} />
-              )}
-              <Text>
-                {startAndEndError === undefined
-                  ? "The pattern has a single start and end"
-                  : startAndEndError}
-              </Text>
-            </Flex>
-          </Inset>
-        </Box>
-      </Card>
-      <Handle type="source" position={Position.Left} />
-    </div>
+    <Node>
+      <Node.Section handles={<Handle type="source" position={Position.Left} />}>
+        <Heading size="5" weight="bold">
+          Pattern End
+        </Heading>
+        <Text as="div" size="2">
+          End here
+        </Text>
+      </Node.Section>
+      <Node.Separator />
+      <Node.Section>
+        <Flex gap="2" align="center">
+          {startAndEndError === undefined ? (
+            <CheckCircledIcon color={green.green11} />
+          ) : (
+            <CrossCircledIcon color={red.red9} />
+          )}
+          <Text>
+            {startAndEndError === undefined
+              ? "The pattern has a single start and end"
+              : startAndEndError}
+          </Text>
+        </Flex>
+      </Node.Section>
+    </Node>
   );
 };
 
