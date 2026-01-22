@@ -44,7 +44,7 @@ function AddNodes() {
         <DropdownMenu.Item onSelect={() => addNode("move")}>
           Move
         </DropdownMenu.Item>
-        <DropdownMenu.Item onSelect={() => addNode("wait")}>
+        <DropdownMenu.Item onSelect={() => addNode("delay")}>
           Pause
         </DropdownMenu.Item>
       </DropdownMenu.Content>

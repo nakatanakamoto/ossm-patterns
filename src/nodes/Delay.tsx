@@ -11,14 +11,14 @@ import {
 import { Handle, Position, useReactFlow, type Node } from "@xyflow/react";
 import type { PatternNodeType } from ".";
 
-export type WaitNodeType = Node<
+export type DelayNodeType = Node<
   {
     duration: number;
   },
-  "wait"
+  "delay"
 >;
 
-const WaitNode: PatternNodeType<WaitNodeType> = ({ id, data }) => {
+const DelayNode: PatternNodeType<DelayNodeType> = ({ id, data }) => {
   const { updateNodeData } = useReactFlow();
 
   const setDuration = (duration: number) => {
@@ -77,8 +77,8 @@ const WaitNode: PatternNodeType<WaitNodeType> = ({ id, data }) => {
   );
 };
 
-WaitNode.defaultNodeData = () => ({
+DelayNode.defaultNodeData = () => ({
   duration: 300,
 });
 
-export default WaitNode;
+export default DelayNode;
