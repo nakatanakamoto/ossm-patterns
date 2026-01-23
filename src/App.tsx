@@ -13,11 +13,12 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import "@radix-ui/themes/styles.css";
-import { Theme, Text, Badge, Flex } from "@radix-ui/themes";
+import { Theme, Text, Badge, Flex, Button, Link } from "@radix-ui/themes";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
+
 import useAppearance from "./hooks/useAppearance";
 import Menu from "./components/Menu";
 import { nodeTypes } from "./nodes";
-
 import SimpleStroke from "./patterns/simple-stroke.json";
 
 const initialNodes: Node[] = SimpleStroke.nodes as Node[];
@@ -42,6 +43,17 @@ export default function App() {
       <div style={{ width: "100vw", height: "100vh" }}>
         <Panel position="top-left">
           <Menu />
+        </Panel>
+
+        <Panel position="top-right">
+          <Button asChild>
+            <Link
+              target="_blank"
+              href="https://github.com/nakatanakamoto/ossm-patterns"
+            >
+              <GitHubLogoIcon /> ossm-patterns
+            </Link>
+          </Button>
         </Panel>
 
         <Panel position="top-center">
