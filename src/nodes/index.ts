@@ -24,6 +24,8 @@ export const nodeTypes = {
   [nodeType: string]: PatternNodeType<any>;
 };
 
+export type NodeId = NodeType["type"];
+
 export type PatternNodeType<N extends Node> = ((
   props: NodeProps<N>,
 ) => JSX.Element) & {

@@ -16,7 +16,9 @@ const UserInputNode: PatternNodeType<UserInputNodeType> = () => {
   return (
     <Node>
       <Node.Section
-        handles={<Handle type="source" position={Position.Right} />}
+        handles={
+          <Handle id="percentage" type="source" position={Position.Right} />
+        }
       >
         <Heading size="5" weight="bold">
           User Input

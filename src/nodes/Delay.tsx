@@ -44,7 +44,9 @@ const DelayNode: PatternNodeType<DelayNodeType> = ({ id, data }) => {
       <Node.Separator />
 
       <Node.Section
-        handles={<Handle id="time" type="target" position={Position.Left} />}
+        handles={
+          <Handle id="duration" type="target" position={Position.Left} />
+        }
       >
         <Flex justify="between" align="center">
           <Flex gap="2" align="baseline">

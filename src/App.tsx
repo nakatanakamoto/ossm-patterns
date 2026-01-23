@@ -2,7 +2,6 @@ import {
   ReactFlow,
   Background,
   Controls,
-  type Node,
   type Edge,
   Panel,
   useNodesState,
@@ -18,11 +17,8 @@ import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 import useAppearance from "./hooks/useAppearance";
 import Menu from "./components/Menu";
-import { nodeTypes } from "./nodes";
-import SimpleStroke from "./patterns/simple-stroke.json";
-
-const initialNodes: Node[] = SimpleStroke.nodes as Node[];
-const initialEdges: Edge[] = SimpleStroke.edges;
+import { nodeTypes, type NodeType } from "./nodes";
+import isValidConnection from "./utils/isValidConnection";
 
 const proOptions: ProOptions = {
   /// We don't have pro but it is OSS, so [this is allowed](https://reactflow.dev/learn/troubleshooting/remove-attribution)
@@ -32,8 +28,8 @@ const proOptions: ProOptions = {
 export default function App() {
   const [appearance] = useAppearance();
 
-  const [nodes, , onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [nodes, , onNodesChange] = useNodesState<NodeType>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
   const onConnect: OnConnect = (params) =>
     setEdges((eds) => addEdge(params, eds));
@@ -65,7 +61,7 @@ export default function App() {
           </Flex>
         </Panel>
 
-        <ReactFlow
+        <ReactFlow<NodeType>
           colorMode={appearance}
           nodes={nodes}
           edges={edges}
@@ -74,6 +70,17 @@ export default function App() {
           onConnect={onConnect}
           nodeTypes={nodeTypes}
           proOptions={proOptions}
+          isValidConnection={(edge) => {
+            const source = nodes.find((n) => n.id === edge.source);
+            const target = nodes.find((n) => n.id === edge.target);
+            if (!source || !target) return false;
+            return isValidConnection({
+              source,
+              target,
+              sourceHandleId: edge.sourceHandle ?? null,
+              targetHandleId: edge.targetHandle ?? null,
+            });
+          }}
           fitView
         >
           <Background />
