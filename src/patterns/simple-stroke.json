@@ -16,8 +16,8 @@
         "description": "Simple in and out. Sensation does nothing."
       },
       "measured": {
-        "width": 344,
-        "height": 254
+        "width": 340,
+        "height": 250
       },
       "selected": false
     },
@@ -33,13 +33,13 @@
         0.5
       ],
       "data": {
-        "velocity": 100,
+        "velocity": 0.4,
         "position": 1,
         "torque": 0.5,
         "easing": "linear"
       },
       "measured": {
-        "width": 344,
+        "width": 340,
         "height": 338
       },
       "selected": false
@@ -59,8 +59,8 @@
         "duration": 300
       },
       "measured": {
-        "width": 356,
-        "height": 131
+        "width": 340,
+        "height": 127
       }
     },
     {
@@ -75,13 +75,13 @@
         0.5
       ],
       "data": {
-        "velocity": 100,
+        "velocity": 0.4,
         "position": 0,
         "torque": 0.5,
         "easing": "linear"
       },
       "measured": {
-        "width": 344,
+        "width": 340,
         "height": 338
       },
       "selected": true
@@ -99,8 +99,8 @@
       ],
       "data": {},
       "measured": {
-        "width": 517,
-        "height": 221
+        "width": 340,
+        "height": 119
       }
     }
   ],
@@ -125,10 +125,5 @@
       "target": "0.40963617864601043",
       "id": "xy-edge__0.12896420070097692-0.40963617864601043"
     }
-  ],
-  "viewport": {
-    "x": 59.463162453234304,
-    "y": 383.81384251901915,
-    "zoom": 0.6258982293269968
-  }
+  ]
 }

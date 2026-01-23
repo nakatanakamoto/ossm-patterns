@@ -107,12 +107,13 @@ const PatternLoopNode: PatternNodeType<MoveNodeType> = ({ id, data }) => {
             <Text size="3" weight="bold">
               Velocity
             </Text>
-            <Text size="3">{data.velocity}mm/s</Text>
+            <Text size="3">{Math.round(data.velocity * 100)}%</Text>
           </Flex>
           <Slider
             onValueChange={(values) => setVelocity(values[0])}
-            min={0.001}
-            max={600}
+            min={0}
+            max={1}
+            step={0.01}
             value={[data.velocity]}
           />
         </Flex>
@@ -190,7 +191,7 @@ const PatternLoopNode: PatternNodeType<MoveNodeType> = ({ id, data }) => {
 };
 
 PatternLoopNode.defaultNodeData = () => ({
-  velocity: 100,
+  velocity: 0.4,
   position: 0.5,
   torque: 0.5,
   easing: "linear",
