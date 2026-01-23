@@ -4,10 +4,12 @@ import AddNode from "./AddNode";
 import NewPatternDialog from "./NewPatternDialog";
 import { useState } from "react";
 import ImportDialog from "./ImportDialog";
+import OpenTemplateModal, { type Template } from "./OpenTemplateModal";
 
 function Menu() {
   const [newPatternDialogOpen, setNewPatternDialogOpen] = useState(false);
   const [importDialogOpen, setImportDialogOpen] = useState(false);
+  const [templateModalTarget, setTemplateModalTarget] = useState<Template>();
   return (
     <>
       <Flex gap="3">
@@ -19,11 +21,26 @@ function Menu() {
             <DropdownMenu.Item onSelect={() => setNewPatternDialogOpen(true)}>
               New
             </DropdownMenu.Item>
+            <DropdownMenu.Sub>
+              <DropdownMenu.SubTrigger>Open template</DropdownMenu.SubTrigger>
+              <DropdownMenu.SubContent>
+                <DropdownMenu.Item
+                  onSelect={() => setTemplateModalTarget("SimpleStroke")}
+                >
+                  Simple Stroke
+                </DropdownMenu.Item>
+                <DropdownMenu.Item disabled>Teasing Pounding</DropdownMenu.Item>
+                <DropdownMenu.Item disabled>Half Half</DropdownMenu.Item>
+                <DropdownMenu.Item disabled>Deeper</DropdownMenu.Item>
+                <DropdownMenu.Item disabled>Stop 'N Go</DropdownMenu.Item>
+              </DropdownMenu.SubContent>
+            </DropdownMenu.Sub>
+
             <DropdownMenu.Separator />
-            <Export />
             <DropdownMenu.Item onSelect={() => setImportDialogOpen(true)}>
               Import
             </DropdownMenu.Item>
+            <Export />
           </DropdownMenu.Content>
         </DropdownMenu.Root>
         <DropdownMenu.Root>
@@ -48,6 +65,12 @@ function Menu() {
       <ImportDialog
         open={importDialogOpen}
         onOpenChange={setImportDialogOpen}
+      />
+      <OpenTemplateModal
+        open={Boolean(templateModalTarget)}
+        // The modal can only ask to close
+        onOpenChange={() => setTemplateModalTarget(undefined)}
+        template={templateModalTarget!}
       />
     </>
   );
