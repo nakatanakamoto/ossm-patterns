@@ -43,14 +43,16 @@ const DelayNode: PatternNodeType<DelayNodeType> = ({ id, data }) => {
       </Node.Section>
       <Node.Separator />
 
-      <Node.Section>
+      <Node.Section
+        handles={<Handle id="time" type="target" position={Position.Left} />}
+      >
         <Flex justify="between" align="center">
-          <Box flexGrow="1">
+          <Flex gap="2" align="baseline">
             <Text size="4" weight="bold">
               Time
             </Text>
-          </Box>
-          <Box maxWidth="50%" flexGrow="1">
+          </Flex>
+          <Box maxWidth="40%" flexGrow="1">
             <TextField.Root
               onChange={(e) => {
                 const rawValue = e.target.value;
@@ -63,7 +65,7 @@ const DelayNode: PatternNodeType<DelayNodeType> = ({ id, data }) => {
               step={50}
               value={data.duration}
             >
-              <TextField.Slot side="right">Milliseconds</TextField.Slot>
+              <TextField.Slot side="right">ms</TextField.Slot>
             </TextField.Root>
           </Box>
         </Flex>

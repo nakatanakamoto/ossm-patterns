@@ -1,4 +1,4 @@
-import { Button } from "@radix-ui/themes";
+import { DropdownMenu } from "@radix-ui/themes";
 import { useReactFlow } from "@xyflow/react";
 
 function Export() {
@@ -18,7 +18,7 @@ function Export() {
     URL.revokeObjectURL(url);
   };
 
-  return <Button onClick={exportFlow}>Export</Button>;
+  return <DropdownMenu.Item onSelect={exportFlow}>Export</DropdownMenu.Item>;
 }
 
 export default Export;

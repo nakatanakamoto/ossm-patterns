@@ -4,18 +4,21 @@ import StartNode, { type StartNodeType } from "./Start";
 import EndNode, { type EndNodeType } from "./End";
 import DelayNode, { type DelayNodeType } from "./Delay";
 import MoveNode, { type MoveNodeType } from "./Move";
+import UserInputNode, { type UserInputNodeType } from "./UserInput";
 
 export type NodeType =
   | StartNodeType
   | EndNodeType
   | MoveNodeType
-  | DelayNodeType;
+  | DelayNodeType
+  | UserInputNodeType;
 
 export const nodeTypes = {
   start: StartNode,
   end: EndNode,
   move: MoveNode,
   delay: DelayNode,
+  userInput: UserInputNode,
 } satisfies {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [nodeType: string]: PatternNodeType<any>;

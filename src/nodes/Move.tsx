@@ -92,16 +92,14 @@ const PatternLoopNode: PatternNodeType<MoveNodeType> = ({ id, data }) => {
         <Heading size="5" weight="bold">
           Move
         </Heading>
-        <Text as="div" size="2">
-          Actuate
-        </Text>
+        <Text size="2">Actuate</Text>
       </Node.Section>
 
       <Node.Separator />
 
       <Node.Section
         handles={
-          <Handle id="velocity" type="source" position={Position.Left} />
+          <Handle id="velocity" type="target" position={Position.Left} />
         }
       >
         <Flex gap="3" direction="column">
@@ -124,7 +122,7 @@ const PatternLoopNode: PatternNodeType<MoveNodeType> = ({ id, data }) => {
 
       <Node.Section
         handles={
-          <Handle id="velocity" type="source" position={Position.Left} />
+          <Handle id="position" type="target" position={Position.Left} />
         }
       >
         <Flex gap="3" direction="column">
@@ -147,9 +145,7 @@ const PatternLoopNode: PatternNodeType<MoveNodeType> = ({ id, data }) => {
       <Node.Separator />
 
       <Node.Section
-        handles={
-          <Handle id="velocity" type="source" position={Position.Left} />
-        }
+        handles={<Handle id="torque" type="target" position={Position.Left} />}
       >
         <Flex gap="3" direction="column">
           <Flex justify="between" align="center">

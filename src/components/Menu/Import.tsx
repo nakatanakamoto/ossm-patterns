@@ -1,4 +1,11 @@
-import { Button, Callout, DataList, Dialog, Flex } from "@radix-ui/themes";
+import {
+  DropdownMenu,
+  Callout,
+  DataList,
+  Dialog,
+  Flex,
+  Button,
+} from "@radix-ui/themes";
 import { useReactFlow, type ReactFlowState } from "@xyflow/react";
 import { useEffect, useMemo, useState } from "react";
 import type { NodeType } from "../../nodes";
@@ -125,7 +132,7 @@ function Import() {
   return (
     <Dialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
       <Dialog.Trigger>
-        <Button>Import</Button>
+        <DropdownMenu.Item>Import</DropdownMenu.Item>
       </Dialog.Trigger>
 
       <Dialog.Content maxWidth="450px">
