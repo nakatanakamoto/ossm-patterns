@@ -1,11 +1,4 @@
-import {
-  DropdownMenu,
-  Callout,
-  DataList,
-  Dialog,
-  Flex,
-  Button,
-} from "@radix-ui/themes";
+import { Callout, DataList, Dialog, Flex, Button } from "@radix-ui/themes";
 import { useReactFlow, type ReactFlowState } from "@xyflow/react";
 import { useEffect, useMemo, useState } from "react";
 import type { NodeType } from "../../nodes";
@@ -13,47 +6,48 @@ import { isReactFlowState } from "../../types/ReactFlow";
 
 type ImportError = "INCORRECT_FILE_TYPE" | "PARSING_ERROR" | "EMPTY_FILE";
 
-function Import() {
+type ImportDialogProps = Dialog.RootProps;
+
+function ImportDialog({ onOpenChange, ...props }: ImportDialogProps) {
   const { setNodes, setEdges, fitView } = useReactFlow();
   const [draggingOver, setDraggingOver] = useState(false);
   const [incomingData, setIncomingData] = useState<ReactFlowState<NodeType>>();
   const [error, setError] = useState<ImportError>();
-  const [dialogOpen, setDialogOpen] = useState(false);
-
-  const onDrop = async (e: DragEvent) => {
-    e.preventDefault();
-    setDraggingOver(false);
-    setDialogOpen(true);
-
-    if (e.dataTransfer?.files?.length !== 1) {
-      return;
-    }
-
-    const file = e.dataTransfer.files[0]; // We don't support multiple files
-
-    let parsedFile;
-
-    try {
-      parsedFile = JSON.parse(await file.text());
-    } catch {
-      setError("PARSING_ERROR");
-    }
-
-    if (isReactFlowState<NodeType>(parsedFile) === false) {
-      setError("PARSING_ERROR");
-      return;
-    }
-
-    if (parsedFile.nodes.length === 0) {
-      setError("EMPTY_FILE");
-      return;
-    }
-
-    setError(undefined);
-    setIncomingData(parsedFile);
-  };
 
   useEffect(() => {
+    const onDrop = async (e: DragEvent) => {
+      e.preventDefault();
+      setDraggingOver(false);
+      onOpenChange?.(true);
+
+      if (e.dataTransfer?.files?.length !== 1) {
+        return;
+      }
+
+      const file = e.dataTransfer.files[0]; // We don't support multiple files
+
+      let parsedFile;
+
+      try {
+        parsedFile = JSON.parse(await file.text());
+      } catch {
+        setError("PARSING_ERROR");
+      }
+
+      if (isReactFlowState<NodeType>(parsedFile) === false) {
+        setError("PARSING_ERROR");
+        return;
+      }
+
+      if (parsedFile.nodes.length === 0) {
+        setError("EMPTY_FILE");
+        return;
+      }
+
+      setError(undefined);
+      setIncomingData(parsedFile);
+    };
+
     const preventDefaultDropBehavior = (e: DragEvent) => {
       e.preventDefault();
     };
@@ -65,12 +59,16 @@ function Import() {
       window.removeEventListener("dragover", preventDefaultDropBehavior);
       window.removeEventListener("drop", onDrop);
     };
-  }, []);
+  }, [onOpenChange]);
 
   const restore = () => {
     if (incomingData === undefined) return;
     setNodes(incomingData.nodes || []);
     setEdges(incomingData.edges || []);
+    onOpenChange?.(false);
+    setIncomingData(undefined);
+    setError(undefined);
+
     fitView();
   };
 
@@ -130,11 +128,7 @@ function Import() {
   }, [draggingOver, error, incomingData]);
 
   return (
-    <Dialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
-      <Dialog.Trigger>
-        <DropdownMenu.Item>Import</DropdownMenu.Item>
-      </Dialog.Trigger>
-
+    <Dialog.Root {...props}>
       <Dialog.Content maxWidth="450px">
         <Dialog.Title>Import a OSSM Pattern</Dialog.Title>
         <Dialog.Description size="2" mb="5">
@@ -160,18 +154,16 @@ function Import() {
         </Flex>
 
         <Flex gap="3" mt="4" justify="end">
-          <Dialog.Close>
-            <Button variant="soft">Cancel</Button>
-          </Dialog.Close>
-          <Dialog.Close>
-            <Button disabled={incomingData === undefined} onClick={restore}>
-              Import
-            </Button>
-          </Dialog.Close>
+          <Button variant="soft" onClick={() => onOpenChange?.(false)}>
+            Cancel
+          </Button>
+          <Button disabled={incomingData === undefined} onClick={restore}>
+            Import
+          </Button>
         </Flex>
       </Dialog.Content>
     </Dialog.Root>
   );
 }
 
-export default Import;
+export default ImportDialog;
