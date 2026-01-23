@@ -9,6 +9,7 @@ import {
   useEdgesState,
   addEdge,
   type OnConnect,
+  type ProOptions,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import "@radix-ui/themes/styles.css";
@@ -21,6 +22,11 @@ import SimpleStroke from "./patterns/simple-stroke.json";
 
 const initialNodes: Node[] = SimpleStroke.nodes as Node[];
 const initialEdges: Edge[] = SimpleStroke.edges;
+
+const proOptions: ProOptions = {
+  /// We don't have pro but it is OSS, so [this is allowed](https://reactflow.dev/learn/troubleshooting/remove-attribution)
+  hideAttribution: true,
+};
 
 export default function App() {
   const [appearance] = useAppearance();
@@ -55,6 +61,7 @@ export default function App() {
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           nodeTypes={nodeTypes}
+          proOptions={proOptions}
           fitView
         >
           <Background />
