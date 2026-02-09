@@ -17,7 +17,7 @@ const isValidConnection: IsValidConnection = ({
 
   switch (target.type) {
     case "delay": {
-      return sourceHandleId === "duration" && targetHandleId === "duration";
+      return sourceHandleId === "percentage" && targetHandleId === "duration";
     }
     case "move": {
       return sourceHandleId === "percentage";
