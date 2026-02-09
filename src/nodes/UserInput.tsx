@@ -1,7 +1,8 @@
 import { Position, type Node as NodeType } from "@xyflow/react";
 import Node from "../components/Node";
-import { Flex, Heading, Select, Text } from "@radix-ui/themes";
+import { Heading, Select, Text } from "@radix-ui/themes";
 import type { PatternNodeType } from ".";
+import SelectControl from "../components/Node/controls/SelectControl";
 
 export type UserInputType = "DEPTH" | "SPEED" | "SENSATION";
 
@@ -26,25 +27,22 @@ const UserInputNode: PatternNodeType<UserInputNodeType> = () => {
         <Text size="2">Outputs value as a percentage</Text>
       </Node.Section>
       <Node.Separator />
-      <Node.Section>
-        <Flex justify="between" align="center">
-          <Text size="3" weight="bold">
-            Value
-          </Text>
-          <Select.Root defaultValue="Sensation">
-            <Select.Trigger />
-            <Select.Content>
-              <Select.Group>
-                {["Sensation", "Speed"].map((ease) => (
-                  <Select.Item key={ease} value={ease}>
-                    {ease}
-                  </Select.Item>
-                ))}
-              </Select.Group>
-            </Select.Content>
-          </Select.Root>
-        </Flex>
-      </Node.Section>
+      <SelectControl
+        defaultValue="Sensation"
+        label="Input Type"
+        direction="row"
+      >
+        <Select.Trigger />
+        <Select.Content>
+          <Select.Group>
+            {["Sensation", "Speed", "Depth"].map((inputType) => (
+              <Select.Item key={inputType} value={inputType}>
+                {inputType}
+              </Select.Item>
+            ))}
+          </Select.Group>
+        </Select.Content>
+      </SelectControl>
     </Node>
   );
 };
