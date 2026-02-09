@@ -1,4 +1,4 @@
-import { Flex, Heading, Text } from "@radix-ui/themes";
+import { Heading, Text } from "@radix-ui/themes";
 import {
   Handle,
   Position,

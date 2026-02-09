@@ -54,7 +54,9 @@ function Menu() {
             <AddNode type="move">Move</AddNode>
             <AddNode type="delay">Delay</AddNode>
             <DropdownMenu.Separator />
-            <AddNode type="userInput">User Input</AddNode>
+            <AddNode type="userInput">User input</AddNode>
+            <DropdownMenu.Separator />
+            <AddNode type="constInt">Constant integer</AddNode>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       </Flex>

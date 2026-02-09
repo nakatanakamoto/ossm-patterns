@@ -25,6 +25,7 @@ const isValidConnection: IsValidConnection = ({
     case "userInput":
     case "start":
     case "end":
+    case "constInt":
       return true;
     default: {
       const unknownTarget: never = target;

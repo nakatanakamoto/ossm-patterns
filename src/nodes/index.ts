@@ -5,13 +5,15 @@ import EndNode, { type EndNodeType } from "./End";
 import DelayNode, { type DelayNodeType } from "./Delay";
 import MoveNode, { type MoveNodeType } from "./Move";
 import UserInputNode, { type UserInputNodeType } from "./UserInput";
+import ConstantIntNode, { type ConstIntNodeType } from "./ContInt";
 
 export type NodeType =
   | StartNodeType
   | EndNodeType
   | MoveNodeType
   | DelayNodeType
-  | UserInputNodeType;
+  | UserInputNodeType
+  | ConstIntNodeType;
 
 export const nodeTypes = {
   start: StartNode,
@@ -19,6 +21,7 @@ export const nodeTypes = {
   move: MoveNode,
   delay: DelayNode,
   userInput: UserInputNode,
+  constInt: ConstantIntNode,
 } satisfies {
   // Any is needed here to allow for the different node types, as they all have different data shapes.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
