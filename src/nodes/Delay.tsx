@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text, TextField } from "@radix-ui/themes";
+import { Heading, Text, TextField } from "@radix-ui/themes";
 import {
   Handle,
   Position,
@@ -7,6 +7,7 @@ import {
 } from "@xyflow/react";
 import type { PatternNodeType } from ".";
 import Node from "../components/Node";
+import TextFieldControl from "../components/Node/controls/TextFieldControl";
 
 export type DelayNodeType = NodeType<
   {
@@ -43,35 +44,25 @@ const DelayNode: PatternNodeType<DelayNodeType> = ({ id, data }) => {
       </Node.Section>
       <Node.Separator />
 
-      <Node.Section
+      <TextFieldControl
         handles={
           <Handle id="duration" type="target" position={Position.Left} />
         }
+        label="Delay"
+        onChange={(e) => {
+          const rawValue = e.target.value;
+          const parsedValue = parseFloat(rawValue);
+          setDuration(parsedValue);
+        }}
+        type="number"
+        min={0}
+        placeholder="250"
+        step={50}
+        value={data.duration}
+        style={{ width: "100px" }}
       >
-        <Flex justify="between" align="center">
-          <Flex gap="2" align="baseline">
-            <Text size="4" weight="bold">
-              Time
-            </Text>
-          </Flex>
-          <Box maxWidth="40%" flexGrow="1">
-            <TextField.Root
-              onChange={(e) => {
-                const rawValue = e.target.value;
-                const parsedValue = parseFloat(rawValue);
-                setDuration(parsedValue);
-              }}
-              type="number"
-              min={0}
-              placeholder="250"
-              step={50}
-              value={data.duration}
-            >
-              <TextField.Slot side="right">ms</TextField.Slot>
-            </TextField.Root>
-          </Box>
-        </Flex>
-      </Node.Section>
+        <TextField.Slot side="right">ms</TextField.Slot>
+      </TextFieldControl>
     </Node>
   );
 };

@@ -1,4 +1,4 @@
-import { Flex, Heading, Text, TextArea, TextField } from "@radix-ui/themes";
+import { Flex, Heading, Text } from "@radix-ui/themes";
 import {
   Handle,
   Position,
@@ -7,6 +7,8 @@ import {
 } from "@xyflow/react";
 import type { PatternNodeType } from ".";
 import Node from "../components/Node";
+import TextFieldControl from "../components/Node/controls/TextFieldControl";
+import TextAreaControl from "../components/Node/controls/TextAreaControl";
 
 export type StartNodeType = NodeType<
   {
@@ -48,39 +50,27 @@ const StartNode: StartNodeProps = ({ id, data }) => {
 
       <Node.Separator />
 
-      <Node.Section>
-        <Flex justify="between" align="center">
-          <Text size="4" weight="bold">
-            Name
-          </Text>
-          <TextField.Root
-            onChange={(e) => {
-              const value = e.target.value;
-              updateName(value);
-            }}
-            placeholder="Simple stroke"
-            value={data.name}
-          />
-        </Flex>
-      </Node.Section>
+      <TextFieldControl
+        label="Name"
+        onChange={(e) => {
+          const value = e.target.value;
+          updateName(value);
+        }}
+        placeholder="Simple stroke"
+        value={data.name}
+      />
 
       <Node.Separator />
 
-      <Node.Section>
-        <Flex width="100%" gap="2" direction="column">
-          <Text size="4" weight="bold">
-            Description
-          </Text>
-          <TextArea
-            onChange={(e) => {
-              const value = e.target.value;
-              updateDescription(value);
-            }}
-            placeholder="Describe the sensation"
-            value={data.description}
-          />
-        </Flex>
-      </Node.Section>
+      <TextAreaControl
+        label="Description"
+        onChange={(e) => {
+          const value = e.target.value;
+          updateDescription(value);
+        }}
+        placeholder="Describe the pattern"
+        value={data.description}
+      />
     </Node>
   );
 };

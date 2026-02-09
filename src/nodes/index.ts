@@ -20,6 +20,7 @@ export const nodeTypes = {
   delay: DelayNode,
   userInput: UserInputNode,
 } satisfies {
+  // Any is needed here to allow for the different node types, as they all have different data shapes.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [nodeType: string]: PatternNodeType<any>;
 };

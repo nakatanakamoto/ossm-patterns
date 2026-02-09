@@ -7,7 +7,7 @@ import {
 } from "@xyflow/react";
 import type { PatternNodeType } from ".";
 import Node from "../components/Node";
-import SliderControl from "../components/Node/Control";
+import SliderControl from "../components/Node/controls/SliderControl";
 
 export type MoveNodeType = NodeType<
   {
