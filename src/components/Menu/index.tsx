@@ -57,6 +57,7 @@ function Menu() {
             <AddNode type="userInput">User input</AddNode>
             <DropdownMenu.Separator />
             <AddNode type="constInt">Constant integer</AddNode>
+            <AddNode type="clamp">Clamp</AddNode>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       </Flex>

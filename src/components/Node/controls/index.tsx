@@ -17,11 +17,11 @@ function Control({ handles, children }: ControlProps) {
   );
 }
 
-type LabelProps = PropsWithChildren;
+type LabelProps = React.LabelHTMLAttributes<HTMLLabelElement>;
 
-const Label = ({ children }: LabelProps) => (
-  <Text size="3" weight="bold">
-    {children}
+const Label = ({ children, ...labelProps }: LabelProps) => (
+  <Text size="3" weight="bold" asChild>
+    <label {...labelProps}>{children}</label>
   </Text>
 );
 

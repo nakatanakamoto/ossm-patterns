@@ -1,4 +1,4 @@
-import { Box, Card, Separator } from "@radix-ui/themes";
+import { Box, Card, Heading, Separator, Text } from "@radix-ui/themes";
 import type { PropsWithChildren } from "react";
 
 import styles from "./styles.module.css";
@@ -25,7 +25,25 @@ function Section({ handles, children }: SectionProps) {
   );
 }
 
+function Title({ children }: PropsWithChildren) {
+  return (
+    <Heading size="5" weight="bold">
+      {children}
+    </Heading>
+  );
+}
+
+function Description({ children }: PropsWithChildren) {
+  return (
+    <Text as="div" size="2">
+      {children}
+    </Text>
+  );
+}
+
 Node.Section = Section;
 Node.Separator = () => <Separator orientation="horizontal" size="4" />;
+Node.Title = Title;
+Node.Description = Description;
 
 export default Node;
