@@ -1,11 +1,12 @@
 import { TextArea, type TextAreaProps } from "@radix-ui/themes";
 import type { PropsWithChildren } from "react";
 import Control from ".";
+import type { HandleProps } from "@xyflow/react";
 
 type TextAreaControlProps = TextAreaProps &
   PropsWithChildren<{
     label: string;
-    handles?: React.ReactNode;
+    handles?: HandleProps[];
   }>;
 
 function TextAreaControl({

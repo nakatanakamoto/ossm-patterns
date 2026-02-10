@@ -1,9 +1,10 @@
 import { Flex, Text } from "@radix-ui/themes";
-import type { PropsWithChildren, ReactNode } from "react";
+import type { PropsWithChildren } from "react";
 import Node from "../index";
+import type { HandleProps } from "@xyflow/system";
 
 export type ControlProps = PropsWithChildren<{
-  handles: ReactNode;
+  handles?: HandleProps[];
 }>;
 
 function Control({ handles, children }: ControlProps) {

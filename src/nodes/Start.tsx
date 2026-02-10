@@ -1,10 +1,5 @@
 import { Heading, Text } from "@radix-ui/themes";
-import {
-  Handle,
-  Position,
-  useReactFlow,
-  type Node as NodeType,
-} from "@xyflow/react";
+import { Position, useReactFlow, type Node as NodeType } from "@xyflow/react";
 import type { PatternNodeType } from ".";
 import Node from "../components/Node";
 import TextFieldControl from "../components/Node/controls/TextFieldControl";
@@ -37,9 +32,7 @@ const StartNode: StartNodeProps = ({ id, data }) => {
 
   return (
     <Node>
-      <Node.Section
-        handles={<Handle type="target" position={Position.Right} />}
-      >
+      <Node.Section handles={[{ type: "target", position: Position.Right }]}>
         <Heading size="5" weight="bold">
           Pattern Start
         </Heading>

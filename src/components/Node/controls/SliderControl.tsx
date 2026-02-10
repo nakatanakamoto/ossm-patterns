@@ -1,10 +1,10 @@
 import Control from "./";
 import { Flex, Slider, type SliderProps } from "@radix-ui/themes";
-import type { ReactNode } from "react";
+import type { HandleProps } from "@xyflow/react";
 
 type SliderControl = SliderProps & {
   label: string;
-  handles?: ReactNode;
+  handles?: HandleProps[];
   formatValue: (value: Exclude<SliderProps["value"], undefined>) => string;
 };
 

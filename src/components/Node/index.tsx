@@ -1,7 +1,8 @@
 import { Box, Card, Separator } from "@radix-ui/themes";
-import type { PropsWithChildren, ReactNode } from "react";
+import type { PropsWithChildren } from "react";
 
 import styles from "./styles.module.css";
+import { Handle, type HandleProps } from "@xyflow/react";
 
 type NodeProps = PropsWithChildren;
 
@@ -10,14 +11,16 @@ function Node({ children }: NodeProps) {
 }
 
 type SectionProps = PropsWithChildren<{
-  handles?: ReactNode;
+  handles?: HandleProps[];
 }>;
 
 function Section({ handles, children }: SectionProps) {
   return (
     <Box position="relative">
       <Box p="3">{children}</Box>
-      {handles}
+      {handles?.map((handle) => (
+        <Handle key={handle.id} {...handle} />
+      ))}
     </Box>
   );
 }

@@ -1,11 +1,12 @@
 import { Flex, TextField } from "@radix-ui/themes";
 import type { PropsWithChildren } from "react";
 import Control from ".";
+import type { HandleProps } from "@xyflow/react";
 
 type TextFieldControlProps = TextField.RootProps &
   PropsWithChildren<{
     label: string;
-    handles?: React.ReactNode;
+    handles?: HandleProps[];
   }>;
 
 function TextFieldControl({

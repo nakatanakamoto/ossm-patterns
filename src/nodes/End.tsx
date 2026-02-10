@@ -1,7 +1,6 @@
 import { CheckCircledIcon, CrossCircledIcon } from "@radix-ui/react-icons";
 import { Flex, Heading, Text } from "@radix-ui/themes";
 import {
-  Handle,
   Position,
   useEdges,
   useNodes,
@@ -33,7 +32,7 @@ const EndNode: PatternNodeType<EndNodeType> = ({ id }) => {
 
   return (
     <Node>
-      <Node.Section handles={<Handle type="source" position={Position.Left} />}>
+      <Node.Section handles={[{ type: "target", position: Position.Left }]}>
         <Heading size="5" weight="bold">
           Pattern End
         </Heading>

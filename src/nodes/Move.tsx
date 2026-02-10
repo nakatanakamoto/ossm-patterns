@@ -1,10 +1,5 @@
 import { Heading, Text } from "@radix-ui/themes";
-import {
-  Handle,
-  Position,
-  useReactFlow,
-  type Node as NodeType,
-} from "@xyflow/react";
+import { Position, useReactFlow, type Node as NodeType } from "@xyflow/react";
 import type { PatternNodeType } from ".";
 import Node from "../components/Node";
 import SliderControl from "../components/Node/controls/SliderControl";
@@ -42,12 +37,13 @@ const PatternLoopNode: PatternNodeType<MoveNodeType> = ({ id, data }) => {
   return (
     <Node>
       <Node.Section
-        handles={
-          <>
-            <Handle type="source" position={Position.Left} />
-            <Handle type="target" position={Position.Right} />
-          </>
-        }
+        handles={[
+          { type: "source", position: Position.Left },
+          {
+            type: "target",
+            position: Position.Right,
+          },
+        ]}
       >
         <Heading size="5" weight="bold">
           Move
@@ -59,9 +55,7 @@ const PatternLoopNode: PatternNodeType<MoveNodeType> = ({ id, data }) => {
 
       <SliderControl
         label="Velocity"
-        handles={
-          <Handle id="velocity" type="source" position={Position.Left} />
-        }
+        handles={[{ id: "velocity", type: "source", position: Position.Left }]}
         formatValue={(value) => `${Math.round(value[0] * 100)}%`}
         onValueChange={(values) => setVelocity(values[0])}
         min={0}
@@ -74,9 +68,13 @@ const PatternLoopNode: PatternNodeType<MoveNodeType> = ({ id, data }) => {
 
       <SliderControl
         label="Position"
-        handles={
-          <Handle id="position" type="source" position={Position.Left} />
-        }
+        handles={[
+          {
+            id: "position",
+            type: "source",
+            position: Position.Left,
+          },
+        ]}
         formatValue={(value) => `${Math.round(value[0] * 100)}%`}
         onValueChange={(values) => setPosition(values[0])}
         min={0}
@@ -89,7 +87,7 @@ const PatternLoopNode: PatternNodeType<MoveNodeType> = ({ id, data }) => {
 
       <SliderControl
         label="Torque"
-        handles={<Handle id="torque" type="source" position={Position.Left} />}
+        handles={[{ id: "torque", type: "source", position: Position.Left }]}
         formatValue={(value) => `${Math.round(value[0] * 100)}%`}
         onValueChange={(values) => setTorque(values[0])}
         min={0}

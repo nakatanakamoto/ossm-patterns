@@ -1,4 +1,4 @@
-import { Handle, Position, type Node as NodeType } from "@xyflow/react";
+import { Position, type Node as NodeType } from "@xyflow/react";
 import Node from "../components/Node";
 import { Flex, Heading, Select, Text } from "@radix-ui/themes";
 import type { PatternNodeType } from ".";
@@ -16,9 +16,9 @@ const UserInputNode: PatternNodeType<UserInputNodeType> = () => {
   return (
     <Node>
       <Node.Section
-        handles={
-          <Handle id="percentage" type="source" position={Position.Right} />
-        }
+        handles={[
+          { type: "source", position: Position.Right, id: "percentage" },
+        ]}
       >
         <Heading size="5" weight="bold">
           User Input

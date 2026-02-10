@@ -1,10 +1,5 @@
 import { Heading, Text, TextField } from "@radix-ui/themes";
-import {
-  Handle,
-  Position,
-  useReactFlow,
-  type Node as NodeType,
-} from "@xyflow/react";
+import { Position, useReactFlow, type Node as NodeType } from "@xyflow/react";
 import type { PatternNodeType } from ".";
 import Node from "../components/Node";
 import TextFieldControl from "../components/Node/controls/TextFieldControl";
@@ -28,12 +23,13 @@ const DelayNode: PatternNodeType<DelayNodeType> = ({ id, data }) => {
   return (
     <Node>
       <Node.Section
-        handles={
-          <>
-            <Handle type="source" position={Position.Left} />
-            <Handle type="target" position={Position.Right} />
-          </>
-        }
+        handles={[
+          { type: "source", position: Position.Left },
+          {
+            type: "target",
+            position: Position.Right,
+          },
+        ]}
       >
         <Heading size="5" weight="bold">
           Delay
@@ -45,9 +41,13 @@ const DelayNode: PatternNodeType<DelayNodeType> = ({ id, data }) => {
       <Node.Separator />
 
       <TextFieldControl
-        handles={
-          <Handle id="duration" type="target" position={Position.Left} />
-        }
+        handles={[
+          {
+            id: "duration",
+            type: "target",
+            position: Position.Left,
+          },
+        ]}
         label="Delay"
         onChange={(e) => {
           const rawValue = e.target.value;

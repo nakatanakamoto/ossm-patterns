@@ -1,10 +1,5 @@
 import { Heading, Text } from "@radix-ui/themes";
-import {
-  Handle,
-  Position,
-  useReactFlow,
-  type Node as NodeType,
-} from "@xyflow/react";
+import { Position, useReactFlow, type Node as NodeType } from "@xyflow/react";
 import type { PatternNodeType } from ".";
 import Node from "../components/Node";
 import TextFieldControl from "../components/Node/controls/TextFieldControl";
@@ -38,7 +33,7 @@ const ConstIntNode: PatternNodeType<ConstIntNodeType> = ({ id, data }) => {
       <Node.Separator />
 
       <TextFieldControl
-        handles={<Handle id="value" type="target" position={Position.Right} />}
+        handles={[{ id: "value", type: "target", position: Position.Right }]}
         label="Value"
         onChange={(e) => {
           const rawValue = e.target.value;
