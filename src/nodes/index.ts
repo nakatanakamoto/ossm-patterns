@@ -5,7 +5,7 @@ import EndNode, { type EndNodeType } from "./End";
 import DelayNode, { type DelayNodeType } from "./Delay";
 import MoveNode, { type MoveNodeType } from "./Move";
 import UserInputNode, { type UserInputNodeType } from "./UserInput";
-import ConstantIntNode, { type ConstIntNodeType } from "./ContInt";
+import ConstantIntNode, { type ConstIntNodeType } from "./ConstInt";
 import type { ClampNodeType } from "./Clamp";
 import ClampNode from "./Clamp";
 
