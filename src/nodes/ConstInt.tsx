@@ -3,10 +3,11 @@ import { Position, useReactFlow, type Node as NodeType } from "@xyflow/react";
 import type { PatternNodeType } from ".";
 import Node from "../components/Node";
 import TextFieldControl from "../components/Node/controls/TextFieldControl";
+import type { IntegerValue } from "../types/Value";
 
 export type ConstIntNodeType = NodeType<
   {
-    value: number;
+    output?: IntegerValue;
   },
   "constInt"
 >;
@@ -15,8 +16,17 @@ const ConstIntNode: PatternNodeType<ConstIntNodeType> = ({ id, data }) => {
   const { updateNodeData } = useReactFlow();
 
   const setValue = (value: number) => {
+    if (isNaN(value)) {
+      updateNodeData(id, {
+        output: undefined,
+      });
+      return;
+    }
     updateNodeData(id, {
-      value,
+      output: {
+        type: "INTEGER",
+        value,
+      },
     });
   };
 
@@ -33,18 +43,18 @@ const ConstIntNode: PatternNodeType<ConstIntNodeType> = ({ id, data }) => {
       <Node.Separator />
 
       <TextFieldControl
-        handles={[{ id: "integer", type: "source", position: Position.Right }]}
+        handles={[{ id: "output", type: "source", position: Position.Right }]}
         label="Value"
         onChange={(e) => {
           const rawValue = e.target.value;
-          const parsedValue = parseFloat(rawValue);
+          const parsedValue = parseInt(rawValue, 10);
           setValue(parsedValue);
         }}
         type="number"
         min={0}
+        step={1}
         placeholder="250"
-        step={50}
-        value={data.value}
+        value={data.output?.value ?? ""}
         style={{ width: "100px" }}
       />
     </Node>
@@ -52,7 +62,10 @@ const ConstIntNode: PatternNodeType<ConstIntNodeType> = ({ id, data }) => {
 };
 
 ConstIntNode.defaultNodeData = () => ({
-  value: 1,
+  output: {
+    type: "INTEGER",
+    value: 0,
+  },
 });
 
 export default ConstIntNode;

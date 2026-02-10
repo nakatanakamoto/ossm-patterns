@@ -1,14 +1,22 @@
-import type { PatternNodeType } from ".";
+import type { IntNodeType, PatternNodeType } from ".";
 import Node from "../components/Node";
-import { Position, useReactFlow, type Node as NodeType } from "@xyflow/react";
+import {
+  Position,
+  useNodeConnections,
+  useNodesData,
+  useReactFlow,
+  type Node as NodeType,
+} from "@xyflow/react";
 import Control from "../components/Node/controls";
 import { Badge, Flex, Grid, TextField } from "@radix-ui/themes";
-import { useId } from "react";
+import { useEffect, useId, useMemo } from "react";
+import type { FloatValue, IntegerValue } from "../types/Value";
 
 export type ClampNodeType = NodeType<
   {
     min: number;
     max: number;
+    output?: IntegerValue | FloatValue;
   },
   "clamp"
 >;
@@ -19,17 +27,62 @@ const ClampNode: PatternNodeType<ClampNodeType> = ({ id, data }) => {
   const minId = useId();
   const maxId = useId();
 
+  const connections = useNodeConnections({
+    handleType: "target",
+    handleId: "input",
+  });
+
+  const inputNode = useNodesData<IntNodeType>(connections[0]?.source);
+  const inputData = inputNode?.data ?? null;
+
+  useEffect(() => {
+    if (
+      inputData?.output === undefined ||
+      data.min === undefined ||
+      data.max === undefined
+    ) {
+      updateNodeData(id, {
+        output: undefined,
+      });
+      return;
+    }
+
+    updateNodeData(id, {
+      output: {
+        type: inputData.output.type,
+        value: Math.min(data.max, Math.max(data.min, inputData.output.value)),
+      },
+    });
+  }, [inputData, data.min, data.max]);
+
   const setMin = (min: number) => {
     updateNodeData(id, {
-      min,
+      min: isNaN(min) === false ? min : undefined,
     });
   };
 
   const setMax = (max: number) => {
     updateNodeData(id, {
-      max,
+      max: isNaN(max) === false ? max : undefined,
     });
   };
+
+  const valueLabel = useMemo(() => {
+    const output = data?.output;
+    if (output !== undefined) {
+      return output.value;
+    }
+
+    if (data.min === undefined || data.max === undefined) {
+      return <Badge>No input or min/max</Badge>;
+    }
+
+    if (inputNode === null) {
+      return <Badge>Awaiting input</Badge>;
+    }
+
+    return <Badge>Awaiting value</Badge>;
+  }, [data?.output, data?.min, data?.max]);
 
   return (
     <Node>
@@ -51,7 +104,7 @@ const ClampNode: PatternNodeType<ClampNodeType> = ({ id, data }) => {
       <Control>
         <Grid columns="2" gapX="3" gapY="1" align="center">
           <Control.Label htmlFor={minId}>Min</Control.Label>
-          <Control.Label htmlFor={maxId}>Min</Control.Label>
+          <Control.Label htmlFor={maxId}>Max</Control.Label>
           <TextField.Root
             id={minId}
             onChange={(e) => {
@@ -73,7 +126,7 @@ const ClampNode: PatternNodeType<ClampNodeType> = ({ id, data }) => {
               setMax(parsedValue);
             }}
             type="number"
-            min={0}
+            min={data.min}
             placeholder="250"
             step={50}
             value={data.max}
@@ -94,9 +147,7 @@ const ClampNode: PatternNodeType<ClampNodeType> = ({ id, data }) => {
       >
         <Flex justify="between" align="center">
           <Control.Label>Output</Control.Label>
-          <Control.Value>
-            <Badge>Disconnected input</Badge>
-          </Control.Value>
+          <Control.Value>{valueLabel}</Control.Value>
         </Flex>
       </Node.Section>
     </Node>
@@ -104,7 +155,6 @@ const ClampNode: PatternNodeType<ClampNodeType> = ({ id, data }) => {
 };
 
 ClampNode.defaultNodeData = () => ({
-  value: 0,
   min: 0,
   max: 1,
 });

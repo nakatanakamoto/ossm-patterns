@@ -1,18 +1,50 @@
 import { Heading, Text, TextField } from "@radix-ui/themes";
-import { Position, useReactFlow, type Node as NodeType } from "@xyflow/react";
-import type { PatternNodeType } from ".";
+import {
+  Position,
+  useNodeConnections,
+  useNodesData,
+  useReactFlow,
+  type Node as NodeType,
+} from "@xyflow/react";
+import type { IntNodeType, PatternNodeType } from ".";
 import Node from "../components/Node";
 import TextFieldControl from "../components/Node/controls/TextFieldControl";
+import { useEffect } from "react";
+import type { IntegerValue } from "../types/Value";
 
 export type DelayNodeType = NodeType<
   {
-    duration: number;
+    duration?: IntegerValue;
   },
   "delay"
 >;
 
 const DelayNode: PatternNodeType<DelayNodeType> = ({ id, data }) => {
   const { updateNodeData } = useReactFlow();
+
+  const connections = useNodeConnections({
+    handleType: "target",
+    handleId: "duration",
+  });
+
+  const inputNode = useNodesData<IntNodeType>(connections[0]?.source);
+  const inputData = inputNode?.data ?? null;
+
+  useEffect(() => {
+    if (inputData?.output === undefined) {
+      updateNodeData(id, {
+        duration: undefined,
+      });
+      return;
+    }
+
+    updateNodeData(id, {
+      duration: {
+        type: "INTEGER",
+        value: inputData.output.value,
+      },
+    });
+  }, [inputData]);
 
   const setDuration = (duration: number) => {
     updateNodeData(id, {
@@ -58,8 +90,9 @@ const DelayNode: PatternNodeType<DelayNodeType> = ({ id, data }) => {
         min={0}
         placeholder="250"
         step={50}
-        value={data.duration}
+        value={data.duration?.value ?? ""}
         style={{ width: "100px" }}
+        disabled={inputData?.output !== undefined}
       >
         <TextField.Slot side="right">ms</TextField.Slot>
       </TextFieldControl>
@@ -67,8 +100,6 @@ const DelayNode: PatternNodeType<DelayNodeType> = ({ id, data }) => {
   );
 };
 
-DelayNode.defaultNodeData = () => ({
-  duration: 300,
-});
+DelayNode.defaultNodeData = () => ({});
 
 export default DelayNode;

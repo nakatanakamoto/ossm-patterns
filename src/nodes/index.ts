@@ -18,6 +18,8 @@ export type NodeType =
   | ConstIntNodeType
   | ClampNodeType;
 
+export type IntNodeType = ConstIntNodeType | ClampNodeType;
+
 export const nodeTypes = {
   start: StartNode,
   end: EndNode,
