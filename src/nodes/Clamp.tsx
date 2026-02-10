@@ -87,7 +87,7 @@ const ClampNode: PatternNodeType<ClampNodeType> = ({ id, data }) => {
         handles={[
           {
             type: "source",
-            id: "output",
+            id: "integer",
             position: Position.Right,
           },
         ]}

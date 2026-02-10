@@ -8,26 +8,33 @@ type IsValidConnection = (args: {
 }) => boolean;
 
 const isValidConnection: IsValidConnection = ({
+  source,
   target,
   sourceHandleId,
   targetHandleId,
 }) => {
-  if (sourceHandleId === null && targetHandleId !== null) return false;
-  if (sourceHandleId !== null && targetHandleId === null) return false;
+  // This skims off control node to control node connections
+  if ((sourceHandleId === null) === (targetHandleId === null)) return true;
 
+  // This is exclusively to handle data nodes
+  // The target controls what can and cannot be connected to it, so we switch on the target type
   switch (target.type) {
     case "delay": {
-      return sourceHandleId === "percentage" && targetHandleId === "duration";
+      return sourceHandleId === "integer" && targetHandleId === "duration";
     }
     case "move": {
       return sourceHandleId === "percentage";
     }
+    case "clamp": {
+      return source.type === "constInt";
+    }
+    case "constInt":
+    case "end":
     case "userInput":
     case "start":
-    case "end":
-    case "constInt":
-    case "clamp":
-      return true;
+      throw new Error(
+        `Unexpected target for node type ${target.type}: this node has no data inputs, so it should never be the target of a connection`,
+      );
     default: {
       const unknownTarget: never = target;
 

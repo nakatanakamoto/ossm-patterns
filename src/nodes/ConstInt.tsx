@@ -33,7 +33,7 @@ const ConstIntNode: PatternNodeType<ConstIntNodeType> = ({ id, data }) => {
       <Node.Separator />
 
       <TextFieldControl
-        handles={[{ id: "value", type: "target", position: Position.Right }]}
+        handles={[{ id: "integer", type: "source", position: Position.Right }]}
         label="Value"
         onChange={(e) => {
           const rawValue = e.target.value;

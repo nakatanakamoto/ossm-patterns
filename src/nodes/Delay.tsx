@@ -24,9 +24,9 @@ const DelayNode: PatternNodeType<DelayNodeType> = ({ id, data }) => {
     <Node>
       <Node.Section
         handles={[
-          { type: "source", position: Position.Left },
+          { type: "target", position: Position.Left },
           {
-            type: "target",
+            type: "source",
             position: Position.Right,
           },
         ]}

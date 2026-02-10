@@ -32,7 +32,7 @@ const StartNode: StartNodeProps = ({ id, data }) => {
 
   return (
     <Node>
-      <Node.Section handles={[{ type: "target", position: Position.Right }]}>
+      <Node.Section handles={[{ type: "source", position: Position.Right }]}>
         <Heading size="5" weight="bold">
           Pattern Start
         </Heading>
