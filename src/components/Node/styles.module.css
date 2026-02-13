@@ -5,3 +5,11 @@
 
     min-width: 340px;
 }
+
+.card:hover {
+    box-shadow: var(--base-card-surface-hover-box-shadow);
+}
+
+.selected {
+    box-shadow: var(--base-card-surface-active-box-shadow);
+}

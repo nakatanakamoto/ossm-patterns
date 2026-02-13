@@ -1,13 +1,39 @@
 import { Box, Card, Heading, Separator, Text } from "@radix-ui/themes";
-import type { PropsWithChildren } from "react";
+import { useState, type PropsWithChildren } from "react";
+import cx from "classnames";
 
 import styles from "./styles.module.css";
-import { Handle, type HandleProps } from "@xyflow/react";
+import {
+  Handle,
+  useNodeId,
+  useOnSelectionChange,
+  type HandleProps,
+  type UseOnSelectionChangeOptions,
+} from "@xyflow/react";
 
 type NodeProps = PropsWithChildren;
 
 function Node({ children }: NodeProps) {
-  return <Card className={styles.card}>{children}</Card>;
+  const nodeId = useNodeId();
+  const [isSelected, setIsSelected] = useState(false);
+
+  const handleSelectionChange: UseOnSelectionChangeOptions["onChange"] = ({
+    nodes,
+  }) => {
+    if (nodes === null) {
+      setIsSelected(false);
+      return;
+    }
+    setIsSelected(nodes.some((node) => node.id === nodeId));
+  };
+
+  useOnSelectionChange({ onChange: handleSelectionChange });
+
+  return (
+    <Card className={cx(styles.card, { [styles.selected]: isSelected })}>
+      {children}
+    </Card>
+  );
 }
 
 type SectionProps = PropsWithChildren<{
