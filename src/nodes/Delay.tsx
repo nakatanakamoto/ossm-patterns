@@ -31,6 +31,7 @@ const DelayNode: PatternNodeType<DelayNodeType> = ({ id, data }) => {
   const inputData = inputNode?.data ?? null;
 
   useEffect(() => {
+    if (inputData === null) return;
     if (inputData?.output === undefined) {
       updateNodeData(id, {
         duration: undefined,
@@ -44,11 +45,14 @@ const DelayNode: PatternNodeType<DelayNodeType> = ({ id, data }) => {
         value: inputData.output.value,
       },
     });
-  }, [inputData]);
+  }, [id, inputData, updateNodeData]);
 
   const setDuration = (duration: number) => {
     updateNodeData(id, {
-      duration,
+      duration: {
+        type: "INTEGER",
+        value: duration,
+      },
     });
   };
 
