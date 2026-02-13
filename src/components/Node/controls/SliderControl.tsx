@@ -5,13 +5,13 @@ import type { HandleProps } from "@xyflow/react";
 type SliderControl = SliderProps & {
   label: string;
   handles?: HandleProps[];
-  formatValue: (value: Exclude<SliderProps["value"], undefined>) => string;
+  formatValue?: (value: Exclude<SliderProps["value"], undefined>) => string;
 };
 
 function SliderControl({
   label,
   handles,
-  formatValue,
+  formatValue = (value) => value.toString(),
   ...sliderProps
 }: SliderControl) {
   return (

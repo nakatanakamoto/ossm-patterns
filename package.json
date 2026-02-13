@@ -17,7 +17,8 @@
     "lodash": "^4.17.21",
     "radix-ui": "^1.4.3",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "ts-pattern": "^5.9.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

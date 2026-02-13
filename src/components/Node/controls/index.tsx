@@ -4,7 +4,7 @@ import Node from "../index";
 import type { HandleProps } from "@xyflow/system";
 
 export type ControlProps = PropsWithChildren<{
-  handles?: HandleProps[];
+  handles?: Array<HandleProps>;
 }>;
 
 function Control({ handles, children }: ControlProps) {

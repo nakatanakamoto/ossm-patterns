@@ -1,12 +1,13 @@
 import type { PropsWithChildren } from "react";
 import Control from ".";
 import { Flex, Select } from "@radix-ui/themes";
+import type { HandleProps } from "@xyflow/react";
 
 type SelectControlProps = Select.RootProps &
   PropsWithChildren<{
     label: string;
     direction?: "row" | "column";
-    handles?: React.ReactNode;
+    handles?: HandleProps[];
   }>;
 
 function SelectControl({
@@ -17,7 +18,7 @@ function SelectControl({
 }: SelectControlProps) {
   return (
     <Control handles={handles}>
-      <Flex direction={direction} justify="between" gap="2">
+      <Flex direction={direction} justify="between" gap="2" align="center">
         <Control.Label>{selectRootProps.label}</Control.Label>
         <Select.Root {...selectRootProps}>{children}</Select.Root>
       </Flex>
